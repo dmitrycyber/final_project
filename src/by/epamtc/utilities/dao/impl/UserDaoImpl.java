@@ -13,15 +13,6 @@ import by.epamtc.utilities.entity.RegData;
 import by.epamtc.utilities.entity.User;
 
 public class UserDaoImpl implements UserDao {
-	
-	private static final String SELECT_USER_BY_LOGIN_SQL =
-            "SELECT u.user_id, u.user_login, rol.user_role " +
-                    "FROM users u, user_roles rol, user_ratings rat " +
-                    "WHERE u.user_login=? and u.user_password=? and u.user_role=rol.user_role_id and u.user_rating=rat.user_rating_id;";
-
-    private static final String INSERT_NEW_USER_SQL =
-            "INSERT INTO users (user_email, user_phone, user_login, user_password, user_rating, user_role) " +
-                    "VALUES (?, ?, ?, ?, 1, 1)";
     
     private static final String SELECT_USER_BY_LOGIN =
             "SELECT u.id, u.login " +
@@ -69,26 +60,21 @@ public class UserDaoImpl implements UserDao {
 //                user.setRole(role);
             } else {
             	System.out.println("USER NOT FOUND");
-//                throw new UserNotFoundDAOException();
             }
-        } catch (SQLException e) {
-            // todo: log. Что то предпринимаем, ошибка базы или запроса
         } catch (ClassNotFoundException e) {
-            // todo: log. Что то предпринимаем, ошибка java или др.
+        	e.printStackTrace();
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException throwable) {
-                    // todo: log и что то предпринимаем. Ошибка решаеться на уровне DAO. Ошибка закрытия
+                	e.printStackTrace();
                 }
             }
             if (preparedStatement != null) {
-                try {
+                
                     preparedStatement.close();
-                } catch (SQLException throwable) {
-                    // todo: log и что то предпринимаем. Ошибка решаеться на уровне DAO. Ошибка закрытия
-                }
+                
             }
         }
 
