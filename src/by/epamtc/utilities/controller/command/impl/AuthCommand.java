@@ -21,11 +21,8 @@ public class AuthCommand implements Command {
     private final static String ATTRIBUTE_USER = "user";
     private final static String ATTRIBUTE_WRONG_DATA = "Wrong_Data";
 
-    private final static String MAIN_PAGE_URL = "Controller?command=to_main_page";
-    private final static String LOGIN_PAGE_URL = "Controller?command=to_login_page";
-	
-	
-	
+    private final static String MAIN_PAGE_URL = "MainController?command=go_to_main_page";
+    private final static String LOGIN_PAGE_URL = "MainController?command=go_to_login_page";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,12 +49,8 @@ public class AuthCommand implements Command {
             
             session.setAttribute(ATTRIBUTE_USER, user);
             response.sendRedirect(MAIN_PAGE_URL);
-//        } catch (ServiceUserNotFoundException e) {
-//            log.info("Trying authorize with incorrect data");
-//            session.setAttribute(ATTRIBUTE_WRONG_DATA, ATTRIBUTE_WRONG_DATA);
-//            resp.sendRedirect(GO_TO_LOGIN_PAGE);
         } catch (ServiceException e) {
-        	// redirect to error page
+        	// error
         }
 		
 	}

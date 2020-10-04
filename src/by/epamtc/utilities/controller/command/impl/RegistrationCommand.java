@@ -29,8 +29,8 @@ public class RegistrationCommand implements Command {
 	private final static String BUILDING = "building";
 
 	private final static String ATTRIBUTE_USER_EXIST = "user_exist";
-	private final static String GO_TO_LOGIN_PAGE = "Controller?command=to_login_page";
-	private final static String GO_TO_REGISTRATION_PAGE = "Controller?command=to_registration_page";
+	private final static String LOGIN_PAGE_URL = "MainController?command=go_to_login_page";
+    private final static String REGISTRATION_PAGE_URL = "MainController?command=go_to_registration_page";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -54,12 +54,12 @@ public class RegistrationCommand implements Command {
             
             if (registration.getStatus().equals(Status.LOGIN_OCCUPIED)) {
             	System.out.println("login occupied");
-            	response.sendRedirect(GO_TO_REGISTRATION_PAGE);
+            	response.sendRedirect(REGISTRATION_PAGE_URL);
                 session.setAttribute(ATTRIBUTE_USER_EXIST, ATTRIBUTE_USER_EXIST);
             }
             
             session.removeAttribute(ATTRIBUTE_USER_EXIST);
-            response.sendRedirect(GO_TO_LOGIN_PAGE);
+            response.sendRedirect(LOGIN_PAGE_URL);
         
         } catch (ServiceException e) {
             // error
