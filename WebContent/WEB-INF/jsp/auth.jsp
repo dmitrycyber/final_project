@@ -28,12 +28,13 @@
             <div class="wrapper-welcome-section">
                 <div class="card-title"> Авторизация </div>
                 <div class="info-block-adv">
-                    <form class="auth-form">
+                    <form action="MainController" class="auth-form">
+                    <input type="hidden" name="command" value="auth">
                         <div class="parent-field">
-                            <input type="text" placeholder="Логин">
+                            <input type="text" name="login" placeholder="Логин">
                         </div>
                         <div class="parent-field">
-                            <input type="password" placeholder="Пароль" required>
+                            <input type="password" name="password" placeholder="Пароль" required>
                         </div>
                         <div class="parent-submit-btn">
                             <button type="submit" class="submit-btn">Подтвердить</button>

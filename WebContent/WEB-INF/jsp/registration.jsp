@@ -27,17 +27,33 @@
                 <div class="card-title"> Регистрация </div>
                 <div class="info-block-adv">
                     <form class="auth-form">
+                    <input type="hidden" name="command" value="registration">
                         <div class="parent-field">
-                            <input type="text" placeholder="Ваше имя">
+                            <input type="text" name="name" placeholder="Ваше имя">
                         </div>
                         <div class="parent-field">
-                            <input type="text" placeholder="Ваша фамилия">
+                            <input type="text" name="surname" placeholder="Ваша фамилия">
                         </div>
                         <div class="parent-field">
-                            <input type="email" placeholder="Ваш email">
+                            <input type="text" name="login" placeholder="Ваш email">
                         </div>
                         <div class="parent-field">
-                            <input type="password" placeholder="Пароль" required>
+                            <input type="password" name="password" placeholder="Пароль" required>
+                        </div>
+                        <div class="parent-field">
+                            <input type="text" name="phoneNumber" placeholder="Телефон" required>
+                        </div>
+                        <div class="parent-field">
+                            <input type="text" name="street" placeholder="Улица" required>
+                        </div>
+                        <div class="parent-field">
+                            <input type="text" name="house" placeholder="Дома" required>
+                        </div>
+                        <div class="parent-field">
+                            <input type="text" name="building" placeholder="Корпус" required>
+                        </div>
+                        <div class="parent-field">
+                            <input type="text" name="flat" placeholder="Квартира" required>
                         </div>
                         <div class="parent-submit-btn">
                             <button type="submit" class="submit-btn">Подтвердить</button>

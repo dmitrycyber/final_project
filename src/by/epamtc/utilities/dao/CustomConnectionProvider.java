@@ -30,7 +30,6 @@ public class CustomConnectionProvider {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			if (connection == null) {
 				connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-	            System.out.println("CONNECTION " + connection);
 	        }
 		}
 		catch (ClassNotFoundException e) {

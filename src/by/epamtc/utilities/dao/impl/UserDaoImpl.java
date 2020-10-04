@@ -11,80 +11,236 @@ import by.epamtc.utilities.dao.exception.DaoException;
 import by.epamtc.utilities.entity.AuthData;
 import by.epamtc.utilities.entity.RegData;
 import by.epamtc.utilities.entity.User;
+import by.epamtc.utilities.util.Status;
+import by.epamtc.utilities.util.Wrapper;
 
 public class UserDaoImpl implements UserDao {
-    
-    private static final String SELECT_USER_BY_LOGIN =
-            "SELECT u.id, u.login " +
-                    "FROM users u " +
-                    "WHERE u.login=? and u.password=?;";
-    
+
+	private static final String SELECT_USER_BY_LOGIN = "SELECT u.id, u.login, r.role "
+			+ "FROM users u, user_roles ur, roles r "
+			+ "WHERE u.login=? and u.password=? and u.id = ur.user_id and ur.role_id = r.id;";
 	
+	private final static String INSERT_USER = "INSERT INTO users (name,surname,login,password,street,house,flat,building) " +
+            "VALUES(?,?,?,?,?,?,?,?);";
+	
+	private final static String SELECT_USER_ID = "SELECT u.id "
+			+ "FROM users u "
+			+ "WHERE u.login=?";
+	
+	private final static String INSERT_USER_ROLE = "INSERT INTO user_roles (user_id,role_id) " +
+            "VALUES(?,3);";
+
 	@Override
 	public User auth(AuthData authData) throws DaoException {
 		User user = null;
+		CustomConnectionProvider customConnectionProvider;
+		Connection connection;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
 
-        CustomConnectionProvider customConnectionProvider;
-        Connection connection;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+		try {
+			System.out.println("try to auth " + authData);
+			customConnectionProvider = CustomConnectionProvider.getInstance();
+			connection = customConnectionProvider.getConnection();
+			preparedStatement = connection.prepareStatement(SELECT_USER_BY_LOGIN);
 
-        try {
-        	System.out.println("try to auth " + authData);
-            customConnectionProvider = CustomConnectionProvider.getInstance();
-            connection = customConnectionProvider.getConnection();
-            preparedStatement = connection.prepareStatement(SELECT_USER_BY_LOGIN);
-           
+			preparedStatement.setString(1, authData.getLogin());
+			preparedStatement.setString(2, authData.getPassword());
 
-            preparedStatement.setString(1, authData.getLogin());
-            preparedStatement.setString(2, authData.getPassword());
+			resultSet = preparedStatement.executeQuery();
 
-            resultSet = preparedStatement.executeQuery();
-            
-            System.out.println("RESULT SET " + resultSet);
+			if (resultSet.next()) {
+				user = new User();
+				user.setId(Integer.parseInt(resultSet.getString("id")));
+				user.setLogin(resultSet.getString("login"));
+				user.setRole(resultSet.getString("role"));
 
-            if (resultSet.next()) {
-                String id = resultSet.getString("id");
-                String login = resultSet.getString("login");
-                
-                System.out.println("id = " + id);
-                System.out.println("login = " + login);
-                
-//                String role = resultSet.getString("user_role");
-//                String rating = resultSet.getString("user_rating");
+				System.out.println(user);
+				
+			} else {
+				System.out.println("USER NOT FOUND");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException throwable) {
+					throwable.printStackTrace();
+				}
+			}
+			if (preparedStatement != null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException e) {
+					throw new DaoException(e);
+					// TODO: handle exception
+				}
+			}
+		}
 
-//                user = new User();
-                
-//                user.setId(id);
-//                user.setLogin(login);
-//                user.setRole(role);
-            } else {
-            	System.out.println("USER NOT FOUND");
-            }
-        } catch (ClassNotFoundException e) {
-        	e.printStackTrace();
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException throwable) {
-                	e.printStackTrace();
-                }
-            }
-            if (preparedStatement != null) {
-                
-                    preparedStatement.close();
-                
-            }
-        }
-
-        return user;
+		return user;
 	}
 
 	@Override
-	public boolean registrate(RegData registrationData) throws DaoException {
+	public Wrapper<Object> registrate(RegData registrationData) throws DaoException {
+		CustomConnectionProvider customConnectionProvider;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			System.out.println("try to reg " + registrationData);
+			customConnectionProvider = CustomConnectionProvider.getInstance();
+			connection = customConnectionProvider.getConnection();
+			String login = registrationData.getLogin();
+			
+			if(!checkIfLoginUnique(login, connection)) {
+				return new Wrapper.Builder().status(Status.LOGIN_OCCUPIED).build();
+			}
+			
+			preparedStatement = connection.prepareStatement(INSERT_USER);
+
+			preparedStatement.setString(1, registrationData.getName());
+			preparedStatement.setString(2, registrationData.getSurname());
+			preparedStatement.setString(3, login);
+			preparedStatement.setString(4, registrationData.getPassword());
+			preparedStatement.setString(5, registrationData.getStreet());
+			preparedStatement.setLong(6, registrationData.getHouse());
+			preparedStatement.setLong(7, registrationData.getFlat());
+			preparedStatement.setString(8, registrationData.getBuilding());
+
+			preparedStatement.executeUpdate();
+			
+			
+			// add note to user_roles
+			addUserRole(connection, login);
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException throwable) {
+					throwable.printStackTrace();
+				}
+			}
+			if (preparedStatement != null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new DaoException(e);
+				}
+			}
+			if(connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new DaoException(e);
+				}
+			}
+		}
 		
-		return false;
+		return new Wrapper.Builder().status(Status.SUCCESSFULL).build();	
+	}
+
+	private void addUserRole(Connection connection, String login) throws DaoException {
+		PreparedStatement prepareStatement = null;
+		ResultSet resultSet = null;
+		
+		int userId = getUserId(login, connection);
+		
+		try {
+			prepareStatement = connection.prepareStatement(INSERT_USER_ROLE);
+			prepareStatement.setLong(1, userId);
+			
+			prepareStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		finally {
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException throwable) {
+					throwable.printStackTrace();
+				}
+			}
+			if (prepareStatement != null) {
+				try {
+					prepareStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new DaoException(e);
+				}
+			}
+		}
+		
+	}
+
+	private boolean checkIfLoginUnique(String login, Connection connection) throws DaoException {
+		boolean execute = false;
+		
+		int userId = getUserId(login, connection);
+		
+		return userId == 0;
+	}
+	
+	private int getUserId(String login, Connection connection) throws DaoException {
+		int userId = 0;
+		PreparedStatement prepareStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			prepareStatement = connection.prepareStatement(SELECT_USER_ID);
+			
+			prepareStatement.setString(1, login);
+			
+			resultSet = prepareStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				userId = Integer.parseInt(resultSet.getString("id"));
+				
+			} else {
+				System.out.println("!!!!!!!user not found");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		}
+		finally {
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new DaoException(e);
+				}
+			}
+			if (prepareStatement != null) {
+				try {
+					prepareStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new DaoException(e);
+				}
+			}
+		}
+		return userId;
 	}
 
 }
