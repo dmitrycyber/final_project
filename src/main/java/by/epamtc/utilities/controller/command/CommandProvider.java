@@ -3,10 +3,7 @@ package by.epamtc.utilities.controller.command;
 import java.util.HashMap;
 import java.util.Map;
 
-import by.epamtc.utilities.controller.command.impl.AuthCommand;
-import by.epamtc.utilities.controller.command.impl.GoToAuthPageCommand;
-import by.epamtc.utilities.controller.command.impl.GoToMainPageCommand;
-import by.epamtc.utilities.controller.command.impl.GoToRegistrationPageCommand;
+import by.epamtc.utilities.controller.command.impl.*;
 
 public class CommandProvider {
 	
@@ -17,6 +14,7 @@ public class CommandProvider {
 		commandMap.put(CommandName.GO_TO_AUTH_PAGE, new GoToAuthPageCommand());
 		commandMap.put(CommandName.GO_TO_REGISTRATION_PAGE, new GoToRegistrationPageCommand());
 		commandMap.put(CommandName.AUTH, new AuthCommand());
+		commandMap.put(CommandName.GO_TO_CABINET_PAGE, new GoToCabinetPage());
 	}
 	
 	public Command getCommand(String commandName) {

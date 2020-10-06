@@ -19,10 +19,9 @@ public class AuthCommand implements Command {
     private final static String PASSWORD = "password";
     
     private final static String ATTRIBUTE_USER = "user";
-    private final static String ATTRIBUTE_WRONG_DATA = "Wrong_Data";
 
     private final static String MAIN_PAGE_URL = "MainController?command=go_to_main_page";
-    private final static String LOGIN_PAGE_URL = "MainController?command=go_to_login_page";
+    private final static String CABINET_PAGE_URL = "MainController?command=go_to_cabinet_page";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,12 +44,11 @@ public class AuthCommand implements Command {
             user = userService.login(authData);
             
             System.out.println("CONTROLLER USER " + user);
-            
-            
             session.setAttribute(ATTRIBUTE_USER, user);
-            response.sendRedirect(MAIN_PAGE_URL);
+
+            response.sendRedirect(CABINET_PAGE_URL);
         } catch (ServiceException e) {
-        	// error
+            response.sendRedirect(MAIN_PAGE_URL);
         }
 		
 	}

@@ -26,6 +26,11 @@ html, body{
     background-color: #fff;
     color: #444;
 }
+.user-login{
+    padding: 7px 17px;
+    background-color: #fff;
+    color: #444;
+}
 .welcome-section{
     height: calc(100% - 40px);
 }
