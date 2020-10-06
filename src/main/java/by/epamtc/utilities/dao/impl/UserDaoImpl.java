@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import by.epamtc.utilities.dao.CustomConnectionProvider;
 import by.epamtc.utilities.dao.UserDao;
 import by.epamtc.utilities.dao.exception.DaoException;
+import by.epamtc.utilities.dao.source.ConnectionException;
+import by.epamtc.utilities.dao.source.ConnectionPool;
 import by.epamtc.utilities.entity.AuthData;
 import by.epamtc.utilities.entity.RegData;
 import by.epamtc.utilities.entity.User;
@@ -15,6 +17,8 @@ import by.epamtc.utilities.util.Status;
 import by.epamtc.utilities.util.Wrapper;
 
 public class UserDaoImpl implements UserDao {
+	private final ConnectionPool connectionPool = ConnectionPool.getInstance();
+
 
 	private static final String SELECT_USER_BY_LOGIN = "SELECT u.id, u.login, r.role "
 			+ "FROM users u, user_roles ur, roles r "
@@ -34,14 +38,13 @@ public class UserDaoImpl implements UserDao {
 	public User auth(AuthData authData) throws DaoException {
 		User user = null;
 		CustomConnectionProvider customConnectionProvider;
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
 		try {
 			System.out.println("try to auth " + authData);
-			customConnectionProvider = CustomConnectionProvider.getInstance();
-			connection = customConnectionProvider.getConnection();
+			connection = connectionPool.takeConnection();
 			preparedStatement = connection.prepareStatement(SELECT_USER_BY_LOGIN);
 
 			preparedStatement.setString(1, authData.getLogin());
@@ -63,24 +66,11 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(e);
-		} catch (ClassNotFoundException e) {
+		} catch (ConnectionException e) {
 			e.printStackTrace();
+			throw new DaoException(e);
 		} finally {
-			if (resultSet != null) {
-				try {
-					resultSet.close();
-				} catch (SQLException throwable) {
-					throwable.printStackTrace();
-				}
-			}
-			if (preparedStatement != null) {
-				try {
-					preparedStatement.close();
-				} catch (SQLException e) {
-					throw new DaoException(e);
-					// TODO: handle exception
-				}
-			}
+			connectionPool.closeConnection(connection, preparedStatement, resultSet);
 		}
 
 		return user;
@@ -88,15 +78,12 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public Wrapper<Object> registrate(RegData registrationData) throws DaoException {
-		CustomConnectionProvider customConnectionProvider;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 
 		try {
 			System.out.println("try to reg " + registrationData);
-			customConnectionProvider = CustomConnectionProvider.getInstance();
-			connection = customConnectionProvider.getConnection();
+			connection = connectionPool.takeConnection();
 			String login = registrationData.getLogin();
 			
 			if(!checkIfLoginUnique(login, connection)) {
@@ -124,34 +111,12 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(e);
-		} catch (ClassNotFoundException e) {
+		} catch (ConnectionException e) {
 			e.printStackTrace();
+			throw new DaoException(e);
 		} finally {
-			if (resultSet != null) {
-				try {
-					resultSet.close();
-				} catch (SQLException throwable) {
-					throwable.printStackTrace();
-				}
-			}
-			if (preparedStatement != null) {
-				try {
-					preparedStatement.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					throw new DaoException(e);
-				}
-			}
-			if(connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					throw new DaoException(e);
-				}
-			}
+			connectionPool.closeConnection(connection, preparedStatement);
 		}
-		
 		return new Wrapper.Builder().status(Status.SUCCESSFULL).build();	
 	}
 
@@ -170,32 +135,13 @@ public class UserDaoImpl implements UserDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		finally {
-			if (resultSet != null) {
-				try {
-					resultSet.close();
-				} catch (SQLException throwable) {
-					throwable.printStackTrace();
-				}
-			}
-			if (prepareStatement != null) {
-				try {
-					prepareStatement.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					throw new DaoException(e);
-				}
-			}
+			connectionPool.closeConnection(prepareStatement, resultSet);
 		}
-		
 	}
 
 	private boolean checkIfLoginUnique(String login, Connection connection) throws DaoException {
-		boolean execute = false;
-		
 		int userId = getUserId(login, connection);
-		
 		return userId == 0;
 	}
 	
@@ -206,9 +152,7 @@ public class UserDaoImpl implements UserDao {
 		
 		try {
 			prepareStatement = connection.prepareStatement(SELECT_USER_ID);
-			
 			prepareStatement.setString(1, login);
-			
 			resultSet = prepareStatement.executeQuery();
 			
 			if (resultSet.next()) {
@@ -223,22 +167,7 @@ public class UserDaoImpl implements UserDao {
 			throw new DaoException(e);
 		}
 		finally {
-			if (resultSet != null) {
-				try {
-					resultSet.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					throw new DaoException(e);
-				}
-			}
-			if (prepareStatement != null) {
-				try {
-					prepareStatement.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					throw new DaoException(e);
-				}
-			}
+			connectionPool.closeConnection(prepareStatement, resultSet);
 		}
 		return userId;
 	}
