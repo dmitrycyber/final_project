@@ -52,17 +52,18 @@ public class UserDaoImpl implements UserDao {
 
 			resultSet = preparedStatement.executeQuery();
 
-			if (resultSet.next()) {
-				user = new User();
-				user.setId(Integer.parseInt(resultSet.getString("id")));
-				user.setLogin(resultSet.getString("login"));
-				user.setRole(resultSet.getString("role"));
-
-				System.out.println(user);
-				
-			} else {
-				System.out.println("USER NOT FOUND");
+			if (!resultSet.next()){
+				//TODO add log
+				throw new DaoException("User not found");
 			}
+			user = new User();
+			user.setId(Integer.parseInt(resultSet.getString("id")));
+			user.setLogin(resultSet.getString("login"));
+			user.setRole(resultSet.getString("role"));
+
+			System.out.println(user);
+				
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(e);
@@ -102,8 +103,6 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setString(8, registrationData.getBuilding());
 
 			preparedStatement.executeUpdate();
-			
-			
 			// add note to user_roles
 			addUserRole(connection, login);
 			
@@ -122,7 +121,6 @@ public class UserDaoImpl implements UserDao {
 
 	private void addUserRole(Connection connection, String login) throws DaoException {
 		PreparedStatement prepareStatement = null;
-		ResultSet resultSet = null;
 		
 		int userId = getUserId(login, connection);
 		
@@ -136,7 +134,7 @@ public class UserDaoImpl implements UserDao {
 			e.printStackTrace();
 		}
 		finally {
-			connectionPool.closeConnection(prepareStatement, resultSet);
+			connectionPool.closeConnection(prepareStatement);
 		}
 	}
 
@@ -171,5 +169,4 @@ public class UserDaoImpl implements UserDao {
 		}
 		return userId;
 	}
-
 }

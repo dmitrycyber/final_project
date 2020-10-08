@@ -28,7 +28,7 @@ public class RegistrationCommand implements Command {
 	private final static String FLAT = "flat";
 	private final static String BUILDING = "building";
 
-	private final static String ATTRIBUTE_USER_EXIST = "user_exist";
+	private final static String USER_EXIST = "user_exist";
 	private final static String LOGIN_PAGE_URL = "MainController?command=go_to_login_page";
     private final static String REGISTRATION_PAGE_URL = "MainController?command=go_to_registration_page";
 
@@ -55,10 +55,10 @@ public class RegistrationCommand implements Command {
             if (registration.getStatus().equals(Status.LOGIN_OCCUPIED)) {
             	System.out.println("login occupied");
             	response.sendRedirect(REGISTRATION_PAGE_URL);
-                session.setAttribute(ATTRIBUTE_USER_EXIST, ATTRIBUTE_USER_EXIST);
+                session.setAttribute(USER_EXIST, true);
             }
             
-            session.removeAttribute(ATTRIBUTE_USER_EXIST);
+            session.removeAttribute(USER_EXIST);
             response.sendRedirect(LOGIN_PAGE_URL);
         
         } catch (ServiceException e) {
