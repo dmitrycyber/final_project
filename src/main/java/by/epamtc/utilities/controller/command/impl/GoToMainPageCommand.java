@@ -7,8 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.utilities.controller.command.Command;
+import org.apache.log4j.Logger;
 
 public class GoToMainPageCommand implements Command {
+	private static final Logger log = Logger.getLogger(GoToMainPageCommand.class);
+
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

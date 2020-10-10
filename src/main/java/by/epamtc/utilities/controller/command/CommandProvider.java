@@ -15,6 +15,8 @@ public class CommandProvider {
 		commandMap.put(CommandName.GO_TO_REGISTRATION_PAGE, new GoToRegistrationPageCommand());
 		commandMap.put(CommandName.AUTH, new AuthCommand());
 		commandMap.put(CommandName.GO_TO_CABINET_PAGE, new GoToCabinetPage());
+		commandMap.put(CommandName.REGISTRATION, new RegistrationCommand());
+		commandMap.put(CommandName.CHANGE_LANGUAGE, new ChangeLanguageCommand());
 	}
 	
 	public Command getCommand(String commandName) {

@@ -26,6 +26,13 @@ html, body{
     background-color: #fff;
     color: #444;
 }
+
+.button-language{
+    padding: 7px 17px;
+    background-color: #fff;
+    color: #444;
+}
+
 .user-login{
     padding: 7px 17px;
     background-color: #fff;

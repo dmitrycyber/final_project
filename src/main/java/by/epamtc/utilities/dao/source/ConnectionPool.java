@@ -1,6 +1,8 @@
 package by.epamtc.utilities.dao.source;
 
 
+import org.apache.log4j.Logger;
+
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
@@ -10,6 +12,9 @@ import java.util.concurrent.Executor;
 
 public class ConnectionPool {
     private static ConnectionPool instance;
+    private final static Logger log = Logger.getLogger(ConnectionPool.class);
+
+
     private BlockingQueue<Connection> connectionQueue;
     private BlockingQueue<Connection> givenAwayConnectionQueue;
 
@@ -28,7 +33,7 @@ public class ConnectionPool {
             this.poolSize = Integer.parseInt(dbResourceManager.getValue(
                     DBParameter.DB_POOL_SIZE));
         } catch (NumberFormatException e) {
-            //TODO log
+            log.error("Wrong number format of connection pool size");
             poolSize = 5;
         }
         try {
@@ -52,22 +57,23 @@ public class ConnectionPool {
         }catch (ClassNotFoundException e) {
             throw new ConnectionException("Can't find DB driver class", e);
         }catch (SQLException e) {
-            //TODO log
+            log.error("SQLException in ConnectionPool init pool data");
             throw new ConnectionException("SQLException in ConnectionPool", e);
 
         }
     }
 
-    public void dispose() {
+    public void dispose() throws ConnectionException {
         clearConnectionQueue();
     }
 
-    private void clearConnectionQueue() {
+    private void clearConnectionQueue() throws ConnectionException {
         try {
             closeConnectionsQueue(givenAwayConnectionQueue);
             closeConnectionsQueue(connectionQueue);
         } catch (SQLException e) {
-            //TODO log
+            log.error("SQLException in ConnectionPool dispose", e);
+            throw new ConnectionException(e);
         }
     }
 
@@ -77,7 +83,7 @@ public class ConnectionPool {
             connection = connectionQueue.take();
             givenAwayConnectionQueue.add(connection);
         } catch (InterruptedException e) {
-            //TODO log
+            log.error("Error connecting to the data source.", e);
             throw new ConnectionException("Error connecting to the data source.", e);
         }
         return connection;
@@ -87,17 +93,17 @@ public class ConnectionPool {
         try {
             con.close();
         } catch (SQLException e) {
-            //TODO log
+            log.error("SQL exception close connection", e);
         }
         try {
             rs.close();
         } catch (SQLException e) {
-            //TODO log
+            log.error("SQL exception close result set", e);
         }
         try {
             st.close();
         } catch (SQLException e) {
-            //TODO log
+            log.error("SQL exception close statement", e);
         }
     }
 
@@ -105,12 +111,12 @@ public class ConnectionPool {
         try {
             con.close();
         } catch (SQLException e) {
-            //TODO log
+            log.error("SQL exception close connection", e);
         }
         try {
             st.close();
         } catch (SQLException e) {
-            //TODO log
+            log.error("SQL exception close statement", e);
         }
     }
 
@@ -118,12 +124,12 @@ public class ConnectionPool {
         try {
             rs.close();
         } catch (SQLException e) {
-            //TODO log
+            log.error("SQL exception close result set", e);
         }
         try {
             st.close();
         } catch (SQLException e) {
-            //TODO log
+            log.error("SQL exception close statement", e);
         }
     }
 
@@ -131,7 +137,7 @@ public class ConnectionPool {
         try {
             st.close();
         } catch (SQLException e) {
-            //TODO log
+            log.error("SQL exception close statement", e);
         }
     }
 

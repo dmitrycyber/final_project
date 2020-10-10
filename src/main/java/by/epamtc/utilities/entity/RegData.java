@@ -37,7 +37,7 @@ public class RegData implements Serializable{
         }
 		
 		public Builder surname(String surname) {
-            this.name = name;
+            this.surname = surname;
             return this;
         }
 		
