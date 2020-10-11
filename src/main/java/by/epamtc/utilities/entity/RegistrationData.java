@@ -1,13 +1,8 @@
 package by.epamtc.utilities.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
-import by.epamtc.utilities.util.Status;
-import by.epamtc.utilities.util.Wrapper;
-import by.epamtc.utilities.util.Wrapper.Builder;
-
-public class RegData implements Serializable{
+public class RegistrationData implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String name;
@@ -76,12 +71,12 @@ public class RegData implements Serializable{
             return this;
         }
 		
-		public RegData build() {
-            return new RegData(this);
+		public RegistrationData build() {
+            return new RegistrationData(this);
         }
 	}
 	
-	private RegData(Builder builder) {
+	private RegistrationData(Builder builder) {
         name = builder.name;
         surname = builder.surname;
         login = builder.login;
@@ -193,7 +188,7 @@ public class RegData implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		RegData other = (RegData) obj;
+		RegistrationData other = (RegistrationData) obj;
 		if (building == null) {
 			if (other.building != null)
 				return false;

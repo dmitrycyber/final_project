@@ -8,16 +8,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import by.epamtc.utilities.controller.command.Command;
-import by.epamtc.utilities.entity.RegData;
+import by.epamtc.utilities.entity.RegistrationData;
 import by.epamtc.utilities.service.ServiceFactory;
 import by.epamtc.utilities.service.UserService;
 import by.epamtc.utilities.service.exception.ServiceException;
 import by.epamtc.utilities.util.Status;
 import by.epamtc.utilities.util.Wrapper;
+import org.apache.log4j.Logger;
 
 public class RegistrationCommand implements Command {
     private final static ServiceFactory factory = ServiceFactory.getInstance();
     private final static UserService service = factory.getUserService();
+    private final Logger log = Logger.getLogger(RegistrationCommand.class);
 
     private final static String NAME = "name";
     private final static String SURNAME = "surname";
@@ -35,11 +37,13 @@ public class RegistrationCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
         HttpSession session;
 
         session = request.getSession();
 
-        RegData regData = new RegData.Builder()
+        RegistrationData registrationData = new RegistrationData.Builder()
                 .name(request.getParameter(NAME))
                 .surname(request.getParameter(SURNAME))
                 .login(request.getParameter(LOGIN))
@@ -51,7 +55,7 @@ public class RegistrationCommand implements Command {
                 .building(request.getParameter(BUILDING)).build();
 
         try {
-            Wrapper<Object> registration = service.registration(regData);
+            Wrapper<Object> registration = service.registration(registrationData);
 
             if (registration.getStatus().equals(Status.LOGIN_OCCUPIED)) {
                 response.sendRedirect(REGISTRATION_PAGE_URL);
@@ -62,7 +66,7 @@ public class RegistrationCommand implements Command {
             response.sendRedirect(LOGIN_PAGE_URL);
 
         } catch (ServiceException e) {
-            // error
+            log.error("Something wrong", e);
         }
 
     }

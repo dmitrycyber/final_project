@@ -4,7 +4,7 @@ import by.epamtc.utilities.dao.DaoFactory;
 import by.epamtc.utilities.dao.UserDao;
 import by.epamtc.utilities.dao.exception.DaoException;
 import by.epamtc.utilities.entity.AuthData;
-import by.epamtc.utilities.entity.RegData;
+import by.epamtc.utilities.entity.RegistrationData;
 import by.epamtc.utilities.entity.User;
 import by.epamtc.utilities.service.UserService;
 import by.epamtc.utilities.service.exception.ServiceException;
@@ -28,11 +28,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Wrapper<Object> registration(RegData regData) throws ServiceException {
+	public Wrapper<Object> registration(RegistrationData registrationData) throws ServiceException {
 		Wrapper<Object> obWrapper;
 		
 		try {
-			obWrapper = userDao.registrate(regData);
+			obWrapper = userDao.register(registrationData);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

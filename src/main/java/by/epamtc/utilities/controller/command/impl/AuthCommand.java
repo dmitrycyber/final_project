@@ -13,8 +13,11 @@ import by.epamtc.utilities.entity.User;
 import by.epamtc.utilities.service.ServiceFactory;
 import by.epamtc.utilities.service.UserService;
 import by.epamtc.utilities.service.exception.ServiceException;
+import org.apache.log4j.Logger;
 
 public class AuthCommand implements Command {
+    private final static Logger log = Logger.getLogger(AuthCommand.class);
+
     private final static String LOGIN = "login";
     private final static String PASSWORD = "password";
     
@@ -32,18 +35,14 @@ public class AuthCommand implements Command {
 
         String login = request.getParameter(LOGIN);
         String password = request.getParameter(PASSWORD);
-        
-        System.out.println("login " + login);
-        System.out.println("password " + password);
 
         try {
         	AuthData authData = new AuthData();
         	authData.setLogin(login);
         	authData.setPassword(password);
-        	
+
             user = userService.login(authData);
-            
-            System.out.println("CONTROLLER USER " + user);
+
             session.setAttribute(ATTRIBUTE_USER, user);
 
             response.sendRedirect(CABINET_PAGE_URL);

@@ -5,13 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import by.epamtc.utilities.dao.CustomConnectionProvider;
 import by.epamtc.utilities.dao.UserDao;
 import by.epamtc.utilities.dao.exception.DaoException;
 import by.epamtc.utilities.dao.source.ConnectionException;
 import by.epamtc.utilities.dao.source.ConnectionPool;
 import by.epamtc.utilities.entity.AuthData;
-import by.epamtc.utilities.entity.RegData;
+import by.epamtc.utilities.entity.RegistrationData;
 import by.epamtc.utilities.entity.User;
 import by.epamtc.utilities.util.Status;
 import by.epamtc.utilities.util.Wrapper;
@@ -38,8 +37,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User auth(AuthData authData) throws DaoException {
-		User user = null;
-		CustomConnectionProvider customConnectionProvider;
+		User user;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -63,9 +61,6 @@ public class UserDaoImpl implements UserDao {
 			user.setLogin(resultSet.getString("login"));
 			user.setRole(resultSet.getString("role"));
 
-			System.out.println(user);
-				
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(e);
@@ -80,7 +75,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public Wrapper<Object> registrate(RegData registrationData) throws DaoException {
+	public Wrapper<Object> register(RegistrationData registrationData) throws DaoException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
