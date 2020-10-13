@@ -12,6 +12,7 @@ import by.epamtc.utilities.dao.source.ConnectionPool;
 import by.epamtc.utilities.entity.AuthData;
 import by.epamtc.utilities.entity.RegistrationData;
 import by.epamtc.utilities.entity.User;
+import by.epamtc.utilities.entity.UserProfile;
 import by.epamtc.utilities.util.Status;
 import by.epamtc.utilities.util.Wrapper;
 import org.apache.log4j.Logger;
@@ -34,6 +35,10 @@ public class UserDaoImpl implements UserDao {
 	
 	private final static String INSERT_USER_ROLE = "INSERT INTO user_roles (user_id,role_id) " +
             "VALUES(?,3);";
+
+	private final static String SELECT_USER_BY_ID = "SELECT name,surname,login,phone_number,street,house,flat,building "
+			+ "FROM users u "
+			+ "WHERE u.id=?";
 
 	@Override
 	public User auth(AuthData authData) throws DaoException {
@@ -61,6 +66,8 @@ public class UserDaoImpl implements UserDao {
 			user.setLogin(resultSet.getString("login"));
 			user.setRole(resultSet.getString("role"));
 
+			return user;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(e);
@@ -71,7 +78,7 @@ public class UserDaoImpl implements UserDao {
 			connectionPool.closeConnection(connection, preparedStatement, resultSet);
 		}
 
-		return user;
+
 	}
 
 	@Override
@@ -104,7 +111,7 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.executeUpdate();
 			// add note to user_roles
 			addUserRole(connection, login);
-			
+			return new Wrapper.Builder().status(Status.SUCCESSFULL).build();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,8 +122,53 @@ public class UserDaoImpl implements UserDao {
 		} finally {
 			connectionPool.closeConnection(connection, preparedStatement);
 		}
-		return new Wrapper.Builder().status(Status.SUCCESSFULL).build();	
+
 	}
+
+	@Override
+	public UserProfile getUserProfile(long userId) throws DaoException {
+		UserProfile profile;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			log.info("try to get user profile " + userId);
+			connection = connectionPool.takeConnection();
+			preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);
+
+			preparedStatement.setLong(1, userId);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (!resultSet.next()){
+				log.warn("user not found");
+				throw new DaoException("User not found");
+			}
+
+			profile = new UserProfile.Builder()
+					.name(resultSet.getString("name"))
+					.surname(resultSet.getString("surname"))
+					.login(resultSet.getString("login"))
+					.phoneNumber(resultSet.getString("phone_number"))
+					.street(resultSet.getString("street"))
+					.house(resultSet.getInt("house"))
+					.flat(resultSet.getInt("flat"))
+					.building(resultSet.getString("building")).build();
+
+			return profile;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		} finally {
+			connectionPool.closeConnection(connection, preparedStatement, resultSet);
+		}
+	}
+
 
 	private void addUserRole(Connection connection, String login) throws DaoException {
 		PreparedStatement prepareStatement = null;

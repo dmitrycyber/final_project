@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.epamtc.utilities.controller.command.impl.*;
+import by.epamtc.utilities.controller.command.impl.profile.GoToProfileCommand;
 
 public class CommandProvider {
 	
@@ -17,6 +18,7 @@ public class CommandProvider {
 		commandMap.put(CommandName.GO_TO_CABINET_PAGE, new GoToCabinetPage());
 		commandMap.put(CommandName.REGISTRATION, new RegistrationCommand());
 		commandMap.put(CommandName.CHANGE_LANGUAGE, new ChangeLanguageCommand());
+		commandMap.put(CommandName.PROFILE, new GoToProfileCommand());
 	}
 	
 	public Command getCommand(String commandName) {

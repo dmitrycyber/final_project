@@ -6,6 +6,7 @@ import by.epamtc.utilities.dao.exception.DaoException;
 import by.epamtc.utilities.entity.AuthData;
 import by.epamtc.utilities.entity.RegistrationData;
 import by.epamtc.utilities.entity.User;
+import by.epamtc.utilities.entity.UserProfile;
 import by.epamtc.utilities.service.UserService;
 import by.epamtc.utilities.service.exception.ServiceException;
 import by.epamtc.utilities.util.Wrapper;
@@ -41,9 +42,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserProfile(long id) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+	public UserProfile getUserProfile(long userId) throws ServiceException {
+		try {
+			UserProfile userProfile = userDao.getUserProfile(userId);
+ 			return userProfile;
+
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		}
 	}
 	
 
