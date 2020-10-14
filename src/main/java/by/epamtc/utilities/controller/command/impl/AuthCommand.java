@@ -21,9 +21,10 @@ public class AuthCommand implements Command {
     private final static String LOGIN = "login";
     private final static String PASSWORD = "password";
     
-    private final static String ATTRIBUTE_USER = "user";
+    private final static String SESSION_ATTRIBUTE_USER = "user";
 
-    private final static String MAIN_PAGE_URL = "MainController?command=go_to_main_page";
+    private final static String INVALID_DATA = "invalidData";
+    private final static String MAIN_PAGE_URL = "MainController?command=go_to_auth_page";
     private final static String CABINET_PAGE_URL = "MainController?command=go_to_cabinet_page";
 	
 	@Override
@@ -40,13 +41,15 @@ public class AuthCommand implements Command {
         	AuthData authData = new AuthData();
         	authData.setLogin(login);
         	authData.setPassword(password);
-
+            session.removeAttribute(INVALID_DATA);
             user = userService.login(authData);
 
-            session.setAttribute(ATTRIBUTE_USER, user);
+            session.setAttribute(SESSION_ATTRIBUTE_USER, user);
 
             response.sendRedirect(CABINET_PAGE_URL);
         } catch (ServiceException e) {
+
+            session.setAttribute(INVALID_DATA, true);
             response.sendRedirect(MAIN_PAGE_URL);
         }
 		

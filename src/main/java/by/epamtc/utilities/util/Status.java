@@ -8,7 +8,8 @@ public enum Status {
 	NONE(0, ""),
     SUCCESSFULL(200, "successfull"),
     DECLINE(400, "decline"),
-    LOGIN_OCCUPIED(400, "decline");
+    LOGIN_OCCUPIED(1000, "decline"),
+    INVALID_DATA(1001, "invalidData");
 
 
     private static final Map<Integer, Status> lookup = new HashMap<>();

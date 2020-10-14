@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:useBean id="user" class="by.epamtc.utilities.entity.User" scope="session"/>
+
+<fmt:setLocale value="${sessionScope.local}"/>
+<fmt:setBundle basename="prop" var="local"/>
+<fmt:message bundle="${local}" key="local.title.main" var="title"/>
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -21,7 +27,7 @@
 
         <section class="welcome-section">
             <div class="wrapper-welcome-section">
-                <div class="card-title">Добро пожаловать, ${user.login}!</div>
+                <div class="card-title">${title}, ${user.login}!</div>
                 <div class="info-block-adv">
                     <div class="parent-div">
                         <div class="card-style">Предложения для пользователя.. TODO</div>

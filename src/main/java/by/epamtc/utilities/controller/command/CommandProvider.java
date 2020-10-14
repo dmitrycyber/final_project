@@ -19,6 +19,7 @@ public class CommandProvider {
 		commandMap.put(CommandName.REGISTRATION, new RegistrationCommand());
 		commandMap.put(CommandName.CHANGE_LANGUAGE, new ChangeLanguageCommand());
 		commandMap.put(CommandName.PROFILE, new GoToProfileCommand());
+		commandMap.put(CommandName.LOGOUT, new LogoutCommand());
 	}
 	
 	public Command getCommand(String commandName) {

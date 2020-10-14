@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+         pageEncoding="utf-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:useBean id="user" class="by.epamtc.utilities.entity.User" scope="session"/>
+
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -16,19 +18,85 @@
 </head>
 <body>
 <div class="wrapper-box">
-        <%@include file="header.jsp"%>
+    <%@include file="header.jsp" %>
     <div class="wrapper-content">
-        name: ${requestScope.userProfile.name} </br>
-        surname: ${requestScope.userProfile.surname} </br>
-        login: ${requestScope.userProfile.login} </br>
-        phoneNumber: ${requestScope.userProfile.phoneNumber} </br>
+        <section class="welcome-section">
+            <div class="wrapper-welcome-section">
+                <%--                name: ${requestScope.userProfile.name} </br>--%>
+                <%--                surname: ${requestScope.userProfile.surname} </br>--%>
+                <%--                login: ${requestScope.userProfile.login} </br>--%>
+                <%--                phoneNumber: ${requestScope.userProfile.phoneNumber} </br>--%>
 
-        address: ул. ${requestScope.userProfile.street}, д.${requestScope.userProfile.house}
-        <c:if test="${requestScope.userProfile.building != null}">
-            /${requestScope.userProfile.building}
-        </c:if>
-         кв. ${requestScope.userProfile.flat} </br>
+                <%--                address: ул. ${requestScope.userProfile.street}, д.${requestScope.userProfile.house}--%>
+                <%--                <c:if test="${requestScope.userProfile.building != null}">--%>
+                <%--                    /${requestScope.userProfile.building}--%>
+                <%--                </c:if>--%>
+                <%--                кв. ${requestScope.userProfile.flat} </br>--%>
+                <form action="MainController" class="profile-form">
+                    <input type="hidden" name="command" value="editProfile">
+                    <div>
+                        <p class="field-name">Имя</p>
+                    </div>
+                    <div class="parent-field">
+                        <input type="text" name="name" value="${requestScope.userProfile.name}">
+                    </div>
 
+                    <div>
+                        <p class="field-name">Фамилия</p>
+                    </div>
+                    <div class="parent-field">
+                        <input type="text" name="surname" value="${requestScope.userProfile.surname}" required>
+                    </div>
+
+                    <div>
+                        <p class="field-name">Логин</p>
+                    </div>
+                    <div class="parent-field">
+                        <input type="text" name="login" value="${requestScope.userProfile.login}" required>
+                    </div>
+
+                    <div>
+                        <p class="field-name">Телефон</p>
+                    </div>
+                    <div class="parent-field">
+                        <input type="text" name="phoneNumber" value="${requestScope.userProfile.phoneNumber}" required>
+                    </div>
+
+                    <div>
+                        <p class="field-name">Улица</p>
+                    </div>
+                    <div class="parent-field">
+                        <input type="text" name="street" value="${requestScope.userProfile.street}" required>
+                    </div>
+
+                    <div>
+                        <p class="field-name">Дом</p>
+                    </div>
+                    <div class="parent-field">
+                        <input type="text" name="house" value="${requestScope.userProfile.house}" required>
+                    </div>
+
+                    <div>
+                        <p class="field-name">Корпус</p>
+                    </div>
+                    <div class="parent-field">
+                        <input type="text" name="building" value="${requestScope.userProfile.building}" required>
+                    </div>
+
+                    <div>
+                        <p class="field-name">Квартира</p>
+                    </div>
+                    <div class="parent-field">
+                        <input type="text" name="flat" value="${requestScope.userProfile.flat}" required>
+                    </div>
+
+
+                    <div class="parent-submit-btn">
+                        <button type="reset" class="submit-btn">Редактировать</button>
+                    </div>
+                </form>
+            </div>
+        </section>
     </div>
 
     <%@include file="footer.jsp" %>

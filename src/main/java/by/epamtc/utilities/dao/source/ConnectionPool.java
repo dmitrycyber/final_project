@@ -113,11 +113,11 @@ public class ConnectionPool {
         } catch (SQLException e) {
             log.error("SQL exception close connection", e);
         }
-        try {
-            st.close();
-        } catch (SQLException e) {
-            log.error("SQL exception close statement", e);
-        }
+//        try {
+//            st.close();
+//        } catch (SQLException e) {
+//            log.error("SQL exception close statement", e);
+//        }
     }
 
     public void closeConnection(Statement st, ResultSet rs) {

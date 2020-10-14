@@ -31,7 +31,7 @@ public class RegistrationCommand implements Command {
     private final static String FLAT = "flat";
     private final static String BUILDING = "building";
 
-    private final static String USER_EXIST = "user_exist";
+    private final static String USER_EXIST = "userExist";
     private final static String LOGIN_PAGE_URL = "MainController?command=go_to_auth_page";
     private final static String REGISTRATION_PAGE_URL = "MainController?command=go_to_registration_page";
 
@@ -56,14 +56,13 @@ public class RegistrationCommand implements Command {
 
         try {
             Wrapper<Object> registration = service.registration(registrationData);
-
-            if (registration.getStatus().equals(Status.LOGIN_OCCUPIED)) {
-                response.sendRedirect(REGISTRATION_PAGE_URL);
-                session.setAttribute(USER_EXIST, true);
-            }
-
             session.removeAttribute(USER_EXIST);
-            response.sendRedirect(LOGIN_PAGE_URL);
+
+            if (!registration.getStatus().equals(Status.LOGIN_OCCUPIED)) {
+                response.sendRedirect(LOGIN_PAGE_URL);
+            }
+            session.setAttribute(USER_EXIST, true);
+            response.sendRedirect(REGISTRATION_PAGE_URL);
 
         } catch (ServiceException e) {
             log.error("Something wrong", e);

@@ -34,10 +34,10 @@ public class UserServiceImpl implements UserService {
 		
 		try {
 			obWrapper = userDao.register(registrationData);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-		return obWrapper;
+			return obWrapper;
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		}
 
 	}
 

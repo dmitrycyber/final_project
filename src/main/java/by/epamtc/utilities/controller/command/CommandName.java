@@ -8,5 +8,6 @@ public enum CommandName {
 	AUTH,
 	REGISTRATION,
 	CHANGE_LANGUAGE,
-	PROFILE
+	PROFILE,
+	LOGOUT
 }
