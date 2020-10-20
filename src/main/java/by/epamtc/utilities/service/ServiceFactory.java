@@ -1,5 +1,6 @@
 package by.epamtc.utilities.service;
 
+import by.epamtc.utilities.service.impl.AdminServiceImpl;
 import by.epamtc.utilities.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
@@ -10,6 +11,12 @@ public class ServiceFactory {
     }
 
     private final UserService userService = new UserServiceImpl();
+
+    private final AdminService adminService = new AdminServiceImpl();
+
+    public AdminService getAdminService() {
+        return adminService;
+    }
 
     private ServiceFactory() {
     }

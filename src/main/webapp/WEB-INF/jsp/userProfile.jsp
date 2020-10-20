@@ -4,6 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:useBean id="user" class="by.epamtc.utilities.entity.User" scope="session"/>
 
+<fmt:setLocale value="${sessionScope.local}"/>
+<fmt:setBundle basename="prop" var="local"/>
+<fmt:message bundle="${local}" key="local.error.registration" var="regError"/>
+
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -33,7 +37,8 @@
                 <%--                </c:if>--%>
                 <%--                кв. ${requestScope.userProfile.flat} </br>--%>
                 <form action="MainController" class="profile-form">
-                    <input type="hidden" name="command" value="editProfile">
+                    <input type="hidden" name="command" value="change_profile">
+                    <input type="hidden" name="userId" value="${user.id}">
                     <div>
                         <p class="field-name">Имя</p>
                     </div>
@@ -90,9 +95,15 @@
                         <input type="text" name="flat" value="${requestScope.userProfile.flat}" required>
                     </div>
 
+                    <c:if test="${sessionScope.userExist == true}">
+                        <div>
+                            <p class="error-message">${regError}!</p>
+                        </div>
+                    </c:if>
+
 
                     <div class="parent-submit-btn">
-                        <button type="reset" class="submit-btn">Редактировать</button>
+                        <button type="submit" class="submit-btn">Редактировать</button>
                     </div>
                 </form>
             </div>

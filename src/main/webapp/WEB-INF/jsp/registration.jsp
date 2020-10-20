@@ -29,7 +29,6 @@
                 <div class="info-block-adv">
                     <form action="MainController" class="auth-form">
                         <input type="hidden" name="command" value="registration">
-                        <input type="hidden" name="command" value="registration">
                         <div class="parent-field">
                             <input type="text" name="name" placeholder="Ваше имя">
                         </div>

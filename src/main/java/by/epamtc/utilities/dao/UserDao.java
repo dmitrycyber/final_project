@@ -11,5 +11,6 @@ public interface UserDao {
     User auth(AuthData authorizationData) throws DaoException;
     Wrapper<Object> register(RegistrationData registrationData) throws DaoException;
     UserProfile getUserProfile(long userId) throws DaoException;
+    Wrapper<Object> editProfile(UserProfile userProfile) throws DaoException;
     
 }

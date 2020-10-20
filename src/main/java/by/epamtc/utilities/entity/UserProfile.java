@@ -6,6 +6,7 @@ import java.util.Objects;
 public class UserProfile implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private long userId;
     private String name;
     private String surname;
     private String login;
@@ -15,7 +16,8 @@ public class UserProfile implements Serializable {
     private int flat;
     private String building;
 
-    public static class Builder{
+    public static class Builder {
+        private long userId;
         private String name;
         private String surname;
         private String login;
@@ -24,6 +26,11 @@ public class UserProfile implements Serializable {
         private int house;
         private int flat;
         private String building;
+
+        public UserProfile.Builder userId(long userId) {
+            this.userId = userId;
+            return this;
+        }
 
         public UserProfile.Builder name(String name) {
             this.name = name;
@@ -71,6 +78,7 @@ public class UserProfile implements Serializable {
     }
 
     private UserProfile(Builder builder) {
+        userId = builder.userId;
         name = builder.name;
         surname = builder.surname;
         login = builder.login;
@@ -79,6 +87,15 @@ public class UserProfile implements Serializable {
         house = builder.house;
         flat = builder.flat;
         building = builder.building;
+    }
+
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -150,26 +167,12 @@ public class UserProfile implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((building == null) ? 0 : building.hashCode());
-        result = prime * result + flat;
-        result = prime * result + house;
-        result = prime * result + ((login == null) ? 0 : login.hashCode());
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-        result = prime * result + ((street == null) ? 0 : street.hashCode());
-        result = prime * result + ((surname == null) ? 0 : surname.hashCode());
-        return result;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserProfile that = (UserProfile) o;
-        return house == that.house &&
+        return userId == that.userId &&
+                house == that.house &&
                 flat == that.flat &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(surname, that.surname) &&
@@ -180,16 +183,22 @@ public class UserProfile implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "RegData [name=" + name + ", surname=" + surname + ", login=" + login
-                + ", phoneNumber=" + phoneNumber + ", street=" + street + ", house=" + house + ", flat=" + flat
-                + ", building=" + building + "]";
+    public int hashCode() {
+        return Objects.hash(userId, name, surname, login, phoneNumber, street, house, flat, building);
     }
 
-
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "UserProfile{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", login='" + login + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", street='" + street + '\'' +
+                ", house=" + house +
+                ", flat=" + flat +
+                ", building='" + building + '\'' +
+                '}';
+    }
 }

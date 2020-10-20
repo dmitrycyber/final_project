@@ -1,4 +1,4 @@
-package by.epamtc.utilities.controller.command.impl;
+package by.epamtc.utilities.controller.command.impl.registration;
 
 import java.io.IOException;
 
@@ -58,11 +58,14 @@ public class RegistrationCommand implements Command {
             Wrapper<Object> registration = service.registration(registrationData);
             session.removeAttribute(USER_EXIST);
 
-            if (!registration.getStatus().equals(Status.LOGIN_OCCUPIED)) {
+            if (registration.getStatus().equals(Status.LOGIN_OCCUPIED)) {
+                session.setAttribute(USER_EXIST, true);
+                response.sendRedirect(REGISTRATION_PAGE_URL);
+            }
+            else{
                 response.sendRedirect(LOGIN_PAGE_URL);
             }
-            session.setAttribute(USER_EXIST, true);
-            response.sendRedirect(REGISTRATION_PAGE_URL);
+
 
         } catch (ServiceException e) {
             log.error("Something wrong", e);

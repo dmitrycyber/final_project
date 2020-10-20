@@ -2,6 +2,7 @@
          pageEncoding="utf-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<jsp:useBean id="roleConsts" class="by.epamtc.utilities.util.RoleConsts"/>
 
 <fmt:setLocale value="${sessionScope.local}"/>
 <fmt:setBundle basename="prop" var="local"/>
@@ -14,6 +15,7 @@
 <fmt:message bundle="${local}" key="local.work_planes" var="planes"/>
 <fmt:message bundle="${local}" key="local.employees" var="employees"/>
 <fmt:message bundle="${local}" key="local.brigades" var="brigades"/>
+<fmt:message bundle="${local}" key="local.admins" var="admins"/>
 
 <!DOCTYPE html>
 <head>
@@ -40,6 +42,7 @@
                     <input class="button-language" type="submit" value="EN">
                 </form>
             </div>
+
             <c:if test="${sessionScope.user == null}">
                 <c:if test="${param.command != 'go_to_main_page'}">
                     <a href="MainController?command=go_to_main_page" class="btn-link-auth">${home}</a>
@@ -48,8 +51,12 @@
                 <a href="MainController?command=go_to_registration_page" class="btn-link-auth">${register}</a>
             </c:if>
             <c:if test="${sessionScope.user != null}">
-                <%--                ${sessionScope.user.login}--%>
+
                 <div class="box-links-main-page">
+                    <c:if test="${sessionScope.user.role eq roleConsts.ADMIN}">
+                        <a href="MainController?command=go_to_admin_list_page" class="btn-link-auth">${admins}</a>
+                    </c:if>
+
                     <a href="MainController?command=profile" class="btn-link-auth">${profile}</a>
                     <a href="#" class="btn-link-auth">${orders}</a>
                     <a href="#" class="btn-link-auth">${planes}</a>

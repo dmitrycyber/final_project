@@ -1,4 +1,4 @@
-package by.epamtc.utilities.controller.command.impl;
+package by.epamtc.utilities.controller.command.impl.registration;
 
 import java.io.IOException;
 

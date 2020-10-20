@@ -28,6 +28,9 @@ public class UserDaoImpl implements UserDao {
 	
 	private final static String INSERT_USER = "INSERT INTO users (name,surname,login,password,phone_number,street,house,flat,building) " +
             "VALUES(?,?,?,?,?,?,?,?,?);";
+
+	private final static String EDIT_USER_PROFILE = "UPDATE users SET name=?,surname=?,login=?,phone_number=?,street=?,house=?,flat=?,building=?" +
+			"WHERE id=?;";
 	
 	private final static String SELECT_USER_ID = "SELECT u.id "
 			+ "FROM users u "
@@ -61,10 +64,16 @@ public class UserDaoImpl implements UserDao {
 				log.warn("user not found");
 				throw new DaoException("User not found");
 			}
-			user = new User();
-			user.setId(Integer.parseInt(resultSet.getString("id")));
-			user.setLogin(resultSet.getString("login"));
-			user.setRole(resultSet.getString("role"));
+
+			user = new User.Builder()
+					.id(Integer.parseInt(resultSet.getString("id")))
+					.login(resultSet.getString("login"))
+					.role(resultSet.getString("role")).build();
+
+//			user = new User();
+//			user.setId(Integer.parseInt(resultSet.getString("id")));
+//			user.setLogin(resultSet.getString("login"));
+//			user.setRole(resultSet.getString("role"));
 
 			return user;
 
@@ -166,6 +175,49 @@ public class UserDaoImpl implements UserDao {
 			throw new DaoException(e);
 		} finally {
 			connectionPool.closeConnection(connection, preparedStatement, resultSet);
+		}
+	}
+
+	@Override
+	public Wrapper<Object> editProfile(UserProfile userProfile) throws DaoException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			log.info("try to edit profile " + userProfile);
+			connection = connectionPool.takeConnection();
+			String login = userProfile.getLogin();
+
+			if(!checkIfLoginUnique(login, connection)) {
+				log.warn("login is not unique");
+				return new Wrapper.Builder().status(Status.LOGIN_OCCUPIED).build();
+			}
+
+			preparedStatement = connection.prepareStatement(EDIT_USER_PROFILE);
+
+			preparedStatement.setString(1, userProfile.getName());
+			preparedStatement.setString(2, userProfile.getSurname());
+			preparedStatement.setString(3, login);
+			preparedStatement.setString(4, userProfile.getPhoneNumber());
+			preparedStatement.setString(5, userProfile.getStreet());
+			preparedStatement.setLong(6, userProfile.getHouse());
+			preparedStatement.setLong(7, userProfile.getFlat());
+			preparedStatement.setString(8, userProfile.getBuilding());
+			preparedStatement.setLong(9, userProfile.getUserId());
+//			preparedStatement.execute();
+			preparedStatement.executeUpdate();
+			// add note to user_roles
+//			addUserRole(connection, login);
+			return new Wrapper.Builder().status(Status.SUCCESSFULL).build();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		} finally {
+			connectionPool.closeConnection(connection, preparedStatement);
 		}
 	}
 

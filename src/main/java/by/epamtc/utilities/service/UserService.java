@@ -13,4 +13,6 @@ public interface UserService {
 	Wrapper<Object> registration(RegistrationData registrationData) throws ServiceException;
 
     UserProfile getUserProfile(long id) throws ServiceException;
+
+    Wrapper<Object> editUserProfile(UserProfile userProfile) throws ServiceException;
 }

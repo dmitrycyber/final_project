@@ -51,6 +51,18 @@ public class UserServiceImpl implements UserService {
 			throw new ServiceException(e);
 		}
 	}
-	
+
+	@Override
+	public Wrapper<Object> editUserProfile(UserProfile userProfile) throws ServiceException {
+		Wrapper<Object> obWrapper;
+
+		try {
+			obWrapper = userDao.editProfile(userProfile);
+			return obWrapper;
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		}
+	}
+
 
 }
