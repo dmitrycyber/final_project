@@ -36,7 +36,7 @@
                 <div class="info-block-adv">
                     <c:forEach items="${adminList}" var="admin">
                         <form action="MainController">
-                            <input type="hidden" name="command" value="edit_admin_profile">
+                            <input type="hidden" name="command" value="profile">
                             <input type="hidden" name="adminId" value="${admin.id}">
                                  ${login}: ${admin.login}
                             <input class="button-language" type="submit" value="${editBtn}">

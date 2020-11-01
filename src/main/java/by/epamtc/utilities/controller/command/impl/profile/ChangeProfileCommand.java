@@ -2,6 +2,7 @@ package by.epamtc.utilities.controller.command.impl.profile;
 
 import by.epamtc.utilities.controller.command.Command;
 import by.epamtc.utilities.entity.RegistrationData;
+import by.epamtc.utilities.entity.User;
 import by.epamtc.utilities.entity.UserProfile;
 import by.epamtc.utilities.service.ServiceFactory;
 import by.epamtc.utilities.service.UserService;
@@ -18,6 +19,7 @@ import java.io.IOException;
 public class ChangeProfileCommand implements Command {
 
     private final UserService userService = ServiceFactory.getInstance().getUserService();
+    private final static String ATTRIBUTE_USER = "user";
 
     private final String PARAMETER_USER_ID = "userId";
     private final String PARAMETER_NAME = "name";
@@ -25,6 +27,7 @@ public class ChangeProfileCommand implements Command {
     private final String PARAMETER_LOGIN = "login";
     private final String PARAMETER_PHONE = "phoneNumber";
     private final String PARAMETER_STREET = "street";
+
     private final String PARAMETER_HOUSE = "house";
     private final String PARAMETER_BUILDING = "building";
     private final String PARAMETER_FLAT = "flat";
@@ -36,17 +39,26 @@ public class ChangeProfileCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        final String newLogin = request.getParameter(PARAMETER_LOGIN);
+
+        User user = (User) request.getSession().getAttribute(ATTRIBUTE_USER);
+        final String oldLogin = user.getLogin();
+
 
         final UserProfile userProfile = new UserProfile.Builder()
                 .userId(Long.parseLong(request.getParameter(PARAMETER_USER_ID)))
                 .name(request.getParameter(PARAMETER_NAME))
                 .surname(request.getParameter(PARAMETER_SURNAME))
-                .login(request.getParameter(PARAMETER_LOGIN))
+                .login(newLogin)
                 .phoneNumber(request.getParameter(PARAMETER_PHONE))
                 .street(request.getParameter(PARAMETER_STREET))
                 .house(Integer.parseInt(request.getParameter(PARAMETER_HOUSE)))
                 .flat(Integer.parseInt(request.getParameter(PARAMETER_FLAT)))
                 .building(request.getParameter(PARAMETER_BUILDING)).build();
+
+        if (!oldLogin.equals(newLogin)){
+            userProfile.setOldLogin(oldLogin);
+        }
 
         try {
             final HttpSession session = request.getSession();

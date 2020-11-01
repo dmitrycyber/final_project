@@ -26,16 +26,6 @@
     <div class="wrapper-content">
         <section class="welcome-section">
             <div class="wrapper-welcome-section">
-                <%--                name: ${requestScope.userProfile.name} </br>--%>
-                <%--                surname: ${requestScope.userProfile.surname} </br>--%>
-                <%--                login: ${requestScope.userProfile.login} </br>--%>
-                <%--                phoneNumber: ${requestScope.userProfile.phoneNumber} </br>--%>
-
-                <%--                address: ул. ${requestScope.userProfile.street}, д.${requestScope.userProfile.house}--%>
-                <%--                <c:if test="${requestScope.userProfile.building != null}">--%>
-                <%--                    /${requestScope.userProfile.building}--%>
-                <%--                </c:if>--%>
-                <%--                кв. ${requestScope.userProfile.flat} </br>--%>
                 <form action="MainController" class="profile-form">
                     <input type="hidden" name="command" value="change_profile">
                     <input type="hidden" name="userId" value="${user.id}">

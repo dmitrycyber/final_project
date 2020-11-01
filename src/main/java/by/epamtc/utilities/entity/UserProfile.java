@@ -10,6 +10,7 @@ public class UserProfile implements Serializable {
     private String name;
     private String surname;
     private String login;
+    private String oldLogin;
     private String phoneNumber;
     private String street;
     private int house;
@@ -21,6 +22,7 @@ public class UserProfile implements Serializable {
         private String name;
         private String surname;
         private String login;
+        private String oldLogin;
         private String phoneNumber;
         private String street;
         private int house;
@@ -44,6 +46,11 @@ public class UserProfile implements Serializable {
 
         public UserProfile.Builder login(String login) {
             this.login = login;
+            return this;
+        }
+
+        public UserProfile.Builder oldLogin(String oldLogin) {
+            this.oldLogin = oldLogin;
             return this;
         }
 
@@ -82,6 +89,7 @@ public class UserProfile implements Serializable {
         name = builder.name;
         surname = builder.surname;
         login = builder.login;
+        oldLogin = builder.oldLogin;
         phoneNumber = builder.phoneNumber;
         street = builder.street;
         house = builder.house;
@@ -89,6 +97,13 @@ public class UserProfile implements Serializable {
         building = builder.building;
     }
 
+    public String getOldLogin() {
+        return oldLogin;
+    }
+
+    public void setOldLogin(String oldLogin) {
+        this.oldLogin = oldLogin;
+    }
 
     public long getUserId() {
         return userId;

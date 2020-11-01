@@ -100,7 +100,7 @@ public class UserDaoImpl implements UserDao {
 			connection = connectionPool.takeConnection();
 			String login = registrationData.getLogin();
 			
-			if(!checkIfLoginUnique(login, connection)) {
+			if(!isLoginUnique(login, connection)) {
 				log.warn("login is not unique");
 				return new Wrapper.Builder().status(Status.LOGIN_OCCUPIED).build();
 			}
@@ -188,9 +188,11 @@ public class UserDaoImpl implements UserDao {
 			connection = connectionPool.takeConnection();
 			String login = userProfile.getLogin();
 
-			if(!checkIfLoginUnique(login, connection)) {
-				log.warn("login is not unique");
-				return new Wrapper.Builder().status(Status.LOGIN_OCCUPIED).build();
+			if (userProfile.getOldLogin() != null){
+				if(!isLoginUnique(login, connection)) {
+					log.warn("login is not unique");
+					return new Wrapper.Builder().status(Status.LOGIN_OCCUPIED).build();
+				}
 			}
 
 			preparedStatement = connection.prepareStatement(EDIT_USER_PROFILE);
@@ -206,8 +208,7 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setLong(9, userProfile.getUserId());
 //			preparedStatement.execute();
 			preparedStatement.executeUpdate();
-			// add note to user_roles
-//			addUserRole(connection, login);
+
 			return new Wrapper.Builder().status(Status.SUCCESSFULL).build();
 
 		} catch (SQLException e) {
@@ -241,7 +242,7 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
-	private boolean checkIfLoginUnique(String login, Connection connection) throws DaoException {
+	private boolean isLoginUnique(String login, Connection connection) throws DaoException {
 		int userId = getUserId(login, connection);
 		return userId == 0;
 	}
