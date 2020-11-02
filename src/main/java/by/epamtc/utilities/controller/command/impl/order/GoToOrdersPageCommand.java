@@ -1,7 +1,6 @@
 package by.epamtc.utilities.controller.command.impl.order;
 
 import by.epamtc.utilities.controller.command.Command;
-import by.epamtc.utilities.dao.impl.UserDaoImpl;
 import by.epamtc.utilities.entity.Order;
 import by.epamtc.utilities.entity.User;
 import by.epamtc.utilities.service.OrderService;
@@ -17,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class GoToOrderPageCommand implements Command {
+public class GoToOrdersPageCommand implements Command {
     private final OrderService orderService = ServiceFactory.getInstance().getOrderService();
-    private final Logger log = Logger.getLogger(GoToOrderPageCommand.class);
+    private final Logger log = Logger.getLogger(GoToOrdersPageCommand.class);
 
     private static final String ATTRIBUTE_USER = "user";
 

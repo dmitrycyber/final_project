@@ -34,6 +34,12 @@
         <section class="welcome-section">
             <div class="wrapper-welcome-section">
                 <div class="card-title">${title}</div>
+                <form action="MainController" class="auth-form">
+                    <input type="hidden" name="command" value="go_to_create_order_page">
+                    <div class="parent-submit-btn">
+                        <button type="submit" class="submit-btn">СОЗДАТЬ ЗАКАЗ</button>
+                    </div>
+                </form>
                 <div class="info-block-adv">
                     <table>
                         <tr>

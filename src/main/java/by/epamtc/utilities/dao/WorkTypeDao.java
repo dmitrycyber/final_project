@@ -1,7 +1,12 @@
 package by.epamtc.utilities.dao;
 
 import by.epamtc.utilities.dao.exception.DaoException;
+import by.epamtc.utilities.entity.WorkType;
+
+import java.util.List;
 
 public interface WorkTypeDao {
-    String workTypeById(long workTypeId) throws DaoException;
+    String findWorkTypeById(long workTypeId) throws DaoException;
+
+    List<WorkType> findAllWorkTypes() throws DaoException;
 }

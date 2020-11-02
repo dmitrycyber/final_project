@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.epamtc.utilities.controller.command.impl.*;
-import by.epamtc.utilities.controller.command.impl.order.GoToOrderPageCommand;
+import by.epamtc.utilities.controller.command.impl.order.GoToCreateOrderPage;
+import by.epamtc.utilities.controller.command.impl.order.GoToOrdersPageCommand;
 import by.epamtc.utilities.controller.command.impl.profile.ChangeProfileCommand;
 import by.epamtc.utilities.controller.command.impl.profile.GoToProfileCommand;
 import by.epamtc.utilities.controller.command.impl.registration.*;
@@ -27,7 +28,8 @@ public class CommandProvider {
 		commandMap.put(CommandName.ADMIN_REGISTRATION, new AdminRegistrationCommand());
 		commandMap.put(CommandName.GO_TO_ADMIN_REGISTRATION, new GoToAdminRegistration());
 		commandMap.put(CommandName.GO_TO_ADMIN_LIST_PAGE, new GoToAdminListPageCommand());
-		commandMap.put(CommandName.GO_TO_ORDERS_PAGE, new GoToOrderPageCommand());
+		commandMap.put(CommandName.GO_TO_ORDERS_PAGE, new GoToOrdersPageCommand());
+		commandMap.put(CommandName.GO_TO_CREATE_ORDER_PAGE, new GoToCreateOrderPage());
 
 	}
 	
