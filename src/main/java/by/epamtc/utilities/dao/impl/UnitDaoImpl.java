@@ -22,7 +22,7 @@ public class UnitDaoImpl implements UnitDao {
             + "FROM units u "
             + "WHERE u.id=?";
 
-    private static final String SELECT_ALL_UNITS = "SELECT u "
+    private static final String SELECT_ALL_UNITS = "SELECT * "
             + "FROM units u;";
 
     @Override

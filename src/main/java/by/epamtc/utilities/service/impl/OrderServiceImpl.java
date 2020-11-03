@@ -6,6 +6,7 @@ import by.epamtc.utilities.entity.Order;
 import by.epamtc.utilities.entity.User;
 import by.epamtc.utilities.service.OrderService;
 import by.epamtc.utilities.service.exception.ServiceException;
+import by.epamtc.utilities.util.OrderStatus;
 import by.epamtc.utilities.util.RoleConsts;
 import by.epamtc.utilities.util.Status;
 import by.epamtc.utilities.util.Wrapper;
@@ -43,5 +44,16 @@ public class OrderServiceImpl implements OrderService {
         }
 
 
+    }
+
+    @Override
+    public Wrapper<Object> addOrder(Order order) throws ServiceException {
+        try {
+            order.setStatus(OrderStatus.NEW);
+            return orderDao.addNewOrder(order);
+        } catch (DaoException e) {
+            log.error(e);
+            throw new ServiceException(e);
+        }
     }
 }

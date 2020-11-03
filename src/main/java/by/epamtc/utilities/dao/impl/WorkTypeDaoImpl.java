@@ -23,7 +23,7 @@ public class WorkTypeDaoImpl implements WorkTypeDao {
             + "FROM work_types wt "
             + "WHERE wt.id=?";
 
-    private static final String SELECT_ALL_WORK_TYPES = "SELECT wt "
+    private static final String SELECT_ALL_WORK_TYPES = "SELECT * "
             + "FROM work_types wt;";
 
     @Override

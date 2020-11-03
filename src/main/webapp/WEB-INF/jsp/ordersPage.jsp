@@ -36,12 +36,14 @@
                 <div class="card-title">${title}</div>
                 <form action="MainController" class="auth-form">
                     <input type="hidden" name="command" value="go_to_create_order_page">
-                    <div class="parent-submit-btn">
-                        <button type="submit" class="submit-btn">СОЗДАТЬ ЗАКАЗ</button>
-                    </div>
+                    <c:if test="${user.role eq roleConsts.USER}">
+                        <div class="parent-submit-btn">
+                            <button type="submit" class="submit-btn">Создать заявку</button>
+                        </div>
+                    </c:if>
                 </form>
                 <div class="info-block-adv">
-                    <table>
+                    <table border="1">
                         <tr>
                             <th>ID</th>
                             <th>Описание</th>
@@ -49,7 +51,7 @@
                             <th>Количество</th>
                             <th>Дата старта</th>
                             <th>Дата окончания</th>
-                            <th>Срочность</th>
+                            <th>Срочная</th>
                             <th>Заказчик</th>
                             <th>Статус</th>
 
@@ -62,16 +64,22 @@
                                 <td>${order.scaleValue} ${order.scaleUnit}</td>
                                 <td>${order.startDate}</td>
                                 <td>${order.endDate}</td>
-                                <td>${order.several}</td>
+                                <td align="center">
+                                    <c:if test="${order.several == true}">
+                                        &#9745;
+                                    </c:if>
+                                </td>
                                 <td>${order.userName} ${order.userSurname}</td>
                                 <td>${order.status}</td>
+                                <c:if test="${user.role eq roleConsts.DISPATCHER}">
                                 <td>
                                     <form action="MainController">
                                         <input type="hidden" name="command" value="profile">
                                         <input type="hidden" name="order" value="${order}">
-                                        <input class="button-language" type="submit" value="${handleBtn}">
+                                        <input class="button-language" type="submit" disabled value="${handleBtn}">
                                     </form>
                                 </td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                     </table>
