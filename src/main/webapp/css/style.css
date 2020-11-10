@@ -96,6 +96,16 @@ html, body{
     color: #fff;
     border: none;
 }
+
+.decline-btn{
+    font-size: 17px;
+    padding: 7px 20px;
+    background-color: #d2110d;
+    color: #fff;
+    border: none;
+}
+
+
 .auth-form{
     text-align: center;
 }

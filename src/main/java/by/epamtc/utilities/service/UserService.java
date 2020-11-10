@@ -7,6 +7,9 @@ import by.epamtc.utilities.entity.UserProfile;
 import by.epamtc.utilities.service.exception.ServiceException;
 import by.epamtc.utilities.util.Wrapper;
 
+import java.util.List;
+import java.util.Map;
+
 public interface UserService {
 	User login(AuthData authData) throws ServiceException;
 	
@@ -15,4 +18,10 @@ public interface UserService {
     UserProfile getUserProfile(long id) throws ServiceException;
 
     Wrapper<Object> editUserProfile(UserProfile userProfile) throws ServiceException;
+
+    Map<String, List<UserProfile>> getEmployeesByPositions() throws ServiceException;
+
+    List<UserProfile> getAllEmployees() throws ServiceException;
+
+    List<UserProfile> getAllAdmins() throws ServiceException;
 }

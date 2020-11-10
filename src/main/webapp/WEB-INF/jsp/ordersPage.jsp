@@ -49,11 +49,11 @@
                             <th>Описание</th>
                             <th>Адрес</th>
                             <th>Количество</th>
-                            <th>Дата старта</th>
-                            <th>Дата окончания</th>
+                            <th>Период</th>
                             <th>Срочная</th>
                             <th>Заказчик</th>
                             <th>Статус</th>
+                            <th>Комментарий</th>
 
                         </tr>
                         <c:forEach items="${orderList}" var="order">
@@ -62,8 +62,7 @@
                                 <td>${order.description}</td>
                                 <td>ул.${order.street} д.${order.house}/${order.building} кв.${order.flat}</td>
                                 <td>${order.scaleValue} ${order.scaleUnit}</td>
-                                <td>${order.startDate}</td>
-                                <td>${order.endDate}</td>
+                                <td>${order.startDate} - <br/>${order.endDate}</td>
                                 <td align="center">
                                     <c:if test="${order.several == true}">
                                         &#9745;
@@ -71,12 +70,13 @@
                                 </td>
                                 <td>${order.userName} ${order.userSurname}</td>
                                 <td>${order.status}</td>
+                                <td>${order.dispatcherComment}</td>
                                 <c:if test="${user.role eq roleConsts.DISPATCHER}">
                                 <td>
                                     <form action="MainController">
-                                        <input type="hidden" name="command" value="profile">
-                                        <input type="hidden" name="order" value="${order}">
-                                        <input class="button-language" type="submit" disabled value="${handleBtn}">
+                                        <input type="hidden" name="command" value="go_to_create_note_page">
+                                        <input type="hidden" name="orderId" value="${order.id}">
+                                        <input class="button-language" type="submit" value="${handleBtn}">
                                     </form>
                                 </td>
                                 </c:if>

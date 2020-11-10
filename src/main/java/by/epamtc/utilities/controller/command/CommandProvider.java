@@ -4,9 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.epamtc.utilities.controller.command.impl.*;
+import by.epamtc.utilities.controller.command.impl.employee.GoToEmployeePageCommand;
 import by.epamtc.utilities.controller.command.impl.order.CreateOrderCommand;
 import by.epamtc.utilities.controller.command.impl.order.GoToCreateOrderPageCommand;
 import by.epamtc.utilities.controller.command.impl.order.GoToOrdersPageCommand;
+import by.epamtc.utilities.controller.command.impl.plan.CreateNoteCommand;
+import by.epamtc.utilities.controller.command.impl.plan.GoToWorkPlanListCommand;
+import by.epamtc.utilities.controller.command.impl.plan.GoToWorkPlaneAddNoteCommand;
 import by.epamtc.utilities.controller.command.impl.profile.ChangeProfileCommand;
 import by.epamtc.utilities.controller.command.impl.profile.GoToProfileCommand;
 import by.epamtc.utilities.controller.command.impl.registration.*;
@@ -32,6 +36,10 @@ public class CommandProvider {
 		commandMap.put(CommandName.GO_TO_ORDERS_PAGE, new GoToOrdersPageCommand());
 		commandMap.put(CommandName.GO_TO_CREATE_ORDER_PAGE, new GoToCreateOrderPageCommand());
 		commandMap.put(CommandName.CREATE_ORDER, new CreateOrderCommand());
+		commandMap.put(CommandName.GO_TO_CREATE_NOTE_PAGE, new GoToWorkPlaneAddNoteCommand());
+		commandMap.put(CommandName.CREATE_NOTE, new CreateNoteCommand());
+		commandMap.put(CommandName.GO_TO_EMPLOYEES_PAGE, new GoToEmployeePageCommand());
+		commandMap.put(CommandName.GO_TO_WORK_PLAN_LIST_PAGE, new GoToWorkPlanListCommand());
 
 	}
 	

@@ -27,6 +27,7 @@ public class Order implements Serializable {
     private int house;
     private String building;
     private int flat;
+    private String dispatcherComment;
 
 
     public static class Builder{
@@ -53,6 +54,7 @@ public class Order implements Serializable {
         private int house;
         private String building;
         private int flat;
+        private String dispatcherComment;
 
         public Builder street(String street) {
             this.street = street;
@@ -152,6 +154,11 @@ public class Order implements Serializable {
             return this;
         }
 
+        public Builder dispatcherComment(String dispatcherComment){
+            this.dispatcherComment = dispatcherComment;
+            return this;
+        }
+
         public Order build(){
             return new Order(this);
         }
@@ -178,14 +185,10 @@ public class Order implements Serializable {
         building = builder.building;
         house = builder.house;
         flat = builder.flat;
+        dispatcherComment = builder.dispatcherComment;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public Order() {
     }
 
     public long getId() {
@@ -218,6 +221,38 @@ public class Order implements Serializable {
 
     public void setScaleUnitsId(long scaleUnitsId) {
         this.scaleUnitsId = scaleUnitsId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserSurname() {
+        return userSurname;
+    }
+
+    public void setUserSurname(String userSurname) {
+        this.userSurname = userSurname;
+    }
+
+    public String getWorkType() {
+        return workType;
+    }
+
+    public void setWorkType(String workType) {
+        this.workType = workType;
+    }
+
+    public String getScaleUnit() {
+        return scaleUnit;
+    }
+
+    public void setScaleUnit(String scaleUnit) {
+        this.scaleUnit = scaleUnit;
     }
 
     public double getScaleValue() {
@@ -260,36 +295,12 @@ public class Order implements Serializable {
         this.description = description;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getStatus() {
+        return status;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserSurname() {
-        return userSurname;
-    }
-
-    public void setUserSurname(String userSurname) {
-        this.userSurname = userSurname;
-    }
-
-    public String getWorkType() {
-        return workType;
-    }
-
-    public void setWorkType(String workType) {
-        this.workType = workType;
-    }
-
-    public String getScaleUnit() {
-        return scaleUnit;
-    }
-
-    public void setScaleUnit(String scaleUnit) {
-        this.scaleUnit = scaleUnit;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAddress() {
@@ -332,6 +343,14 @@ public class Order implements Serializable {
         this.flat = flat;
     }
 
+    public String getDispatcherComment() {
+        return dispatcherComment;
+    }
+
+    public void setDispatcherComment(String dispatcherComment) {
+        this.dispatcherComment = dispatcherComment;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -355,12 +374,13 @@ public class Order implements Serializable {
                 Objects.equals(status, order.status) &&
                 Objects.equals(address, order.address) &&
                 Objects.equals(street, order.street) &&
-                Objects.equals(building, order.building);
+                Objects.equals(building, order.building) &&
+                Objects.equals(dispatcherComment, order.dispatcherComment);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, workTypeId, userId, scaleUnitsId, userName, userSurname, workType, scaleUnit, scaleValue, startDate, endDate, isSeveral, description, status, address, street, house, building, flat);
+        return Objects.hash(id, workTypeId, userId, scaleUnitsId, userName, userSurname, workType, scaleUnit, scaleValue, startDate, endDate, isSeveral, description, status, address, street, house, building, flat, dispatcherComment);
     }
 
     @Override
@@ -385,6 +405,7 @@ public class Order implements Serializable {
                 ", house=" + house +
                 ", building='" + building + '\'' +
                 ", flat=" + flat +
+                ", dispatcherComment='" + dispatcherComment + '\'' +
                 '}';
     }
 }

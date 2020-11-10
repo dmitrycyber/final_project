@@ -19,6 +19,12 @@ public class ServiceFactory {
 
     private final WorkTypeService workTypeService = new WorkTypeServiceImpl();
 
+    private final WorkPlanService workPlanService = new WorkPlanServiceImpl();
+
+    public WorkPlanService getWorkPlanService() {
+        return workPlanService;
+    }
+
     public WorkTypeService getWorkTypeService() {
         return workTypeService;
     }

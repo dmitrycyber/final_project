@@ -3,8 +3,10 @@ package by.epamtc.utilities.controller.command.impl.registration;
 import by.epamtc.utilities.controller.command.Command;
 import by.epamtc.utilities.dao.impl.AdminDaoImpl;
 import by.epamtc.utilities.entity.User;
+import by.epamtc.utilities.entity.UserProfile;
 import by.epamtc.utilities.service.AdminService;
 import by.epamtc.utilities.service.ServiceFactory;
+import by.epamtc.utilities.service.UserService;
 import by.epamtc.utilities.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 
@@ -16,6 +18,7 @@ import java.util.List;
 
 public class GoToAdminListPageCommand implements Command {
     private final AdminService adminService = ServiceFactory.getInstance().getAdminService();
+    private final UserService userService = ServiceFactory.getInstance().getUserService();
     private final Logger log = Logger.getLogger(GoToAdminListPageCommand.class);
 
     private static final String ADMIN_ROLE = "admin";
@@ -26,10 +29,9 @@ public class GoToAdminListPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            final List<User> admins = adminService.getAdmins(ADMIN_ROLE);
+            final List<UserProfile> allAdmins = userService.getAllAdmins();
 
-            request.setAttribute(ATTRIBUTE_ADMIN_LIST, admins);
-
+            request.setAttribute(ATTRIBUTE_ADMIN_LIST, allAdmins);
 
         } catch (ServiceException e) {
             log.error(e);

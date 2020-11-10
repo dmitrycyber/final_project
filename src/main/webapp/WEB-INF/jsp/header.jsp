@@ -55,18 +55,18 @@
                 <div class="box-links-main-page">
                     <c:if test="${sessionScope.user.role eq roleConsts.ADMIN}">
                         <a href="MainController?command=go_to_admin_list_page" class="btn-link-auth">${admins}</a>
+                        <a href="MainController?command=go_to_employees_page" class="btn-link-auth">${employees}</a>
                     </c:if>
                     <c:if test="${sessionScope.user.role eq roleConsts.DISPATCHER}">
-                        <a href="#" class="btn-link-auth">${planes}</a>
-                        <a href="#" class="btn-link-auth">${employees}</a>
-                        <a href="#" class="btn-link-auth">${brigades}</a>
+                        <a href="MainController?command=go_to_work_plan_list_page" class="btn-link-auth">${planes}</a>
+                        <a href="MainController?command=go_to_employees_page" class="btn-link-auth">${employees}</a>
                         <a href="MainController?command=go_to_orders_page" class="btn-link-auth">${orders}</a>
                     </c:if>
                     <c:if test="${sessionScope.user.role eq roleConsts.USER}">
                         <a href="MainController?command=go_to_orders_page" class="btn-link-auth">${orders}</a>
                     </c:if>
                     <c:if test="${sessionScope.user.role eq roleConsts.EMPLOYEE}">
-                        <a href="#" class="btn-link-auth">${planes}</a>
+                        <a href="MainController?command=go_to_work_plan_list_page" class="btn-link-auth">${planes}</a>
                     </c:if>
                     <a href="MainController?command=profile" class="btn-link-auth">${profile}</a>
                     <a href="MainController?command=logout" class="btn-link-auth">${logout}</a>

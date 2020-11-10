@@ -15,6 +15,12 @@ public class DaoFactory {
 
     private static final UnitDao unitDao = new UnitDaoImpl();
 
+    private static final WorkPlanDao workPlanDao = new WorkPlanDaoImpl();
+
+    public WorkPlanDao getWorkPlanDao() {
+        return workPlanDao;
+    }
+
     public UnitDao getUnitDao() {
         return unitDao;
     }

@@ -9,4 +9,6 @@ public interface OrderService {
     Wrapper<Object> getOrderList(User user) throws ServiceException;
 
     Wrapper<Object> addOrder(Order order) throws ServiceException;
+
+    Order getOrderById(long orderId) throws ServiceException;
 }

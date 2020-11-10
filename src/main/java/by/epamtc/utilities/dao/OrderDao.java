@@ -11,7 +11,10 @@ import java.util.List;
 public interface OrderDao {
     List<Order> findAllOrders() throws DaoException;
 
-    List<Order> findAllOrdersById(long userId) throws DaoException;
+    List<Order> findAllOrdersByUserId(long userId) throws DaoException;
+
+    Order findOrderById(long orderId) throws DaoException;
+
 
     Wrapper<Object> addNewOrder(Order order) throws DaoException;
 

@@ -3,13 +3,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<jsp:useBean id="adminList" type="java.util.List<by.epamtc.utilities.entity.UserProfile>" scope="request"/>
+<jsp:useBean id="user" class="by.epamtc.utilities.entity.User" scope="session"/>
+<jsp:useBean id="noteList" type="java.util.List<by.epamtc.utilities.entity.Note>" scope="request"/>
 
 <fmt:setLocale value="${sessionScope.local}"/>
 <fmt:setBundle basename="prop" var="local"/>
 <fmt:message bundle="${local}" key="local.placeholder.auth.login" var="login"/>
 <fmt:message bundle="${local}" key="local.edit.button" var="editBtn"/>
-<fmt:message bundle="${local}" key="local.title.adminList" var="title"/>
+<fmt:message bundle="${local}" key="local.title.employeeList" var="title"/>
 
 
 <!DOCTYPE html>
@@ -33,28 +34,33 @@
         <section class="welcome-section">
             <div class="wrapper-welcome-section">
                 <div class="card-title">${title}</div>
-                <c:if test="${user.role eq roleConsts.ADMIN}">
-                    <div class="parent-submit-btn">
-                        <button type="submit" class="submit-btn">Создать администратора</button>
-                    </div>
-                </c:if>
                 <div class="info-block-adv">
                     <table border="1">
                         <tr>
                             <th>ID</th>
-                            <th>Имя</th>
-                            <th>Фамилия</th>
-                            <th>Логин</th>
-                            <th>Телефон</th>
+                            <th>Адрес</th>
+                            <th>Период</th>
+                            <th>Имя заказчика</th>
+                            <th>Телефон заказчика</th>
+                            <th>Описание</th>
+                            <th>Комментарий</th>
+                            <th>Список сотрудников</th>
 
                         </tr>
-                        <c:forEach items="${adminList}" var="admin">
+                        <c:forEach items="${noteList}" var="note">
                             <tr>
-                                <td>${admin.userId}</td>
-                                <td>${admin.name}</td>
-                                <td>${admin.surname}</td>
-                                <td>${admin.login}</td>
-                                <td>${admin.phoneNumber}</td>
+                                <td>${note.id}</td>
+                                <td>ул.${note.street} д.${note.house}/${note.building} кв.${note.flat}</td>
+                                <td>${note.startDate} - <br/> ${note.endDate}</td>
+                                <td>${note.name}</td>
+                                <td>${note.phoneNumber}</td>
+                                <td>${note.description}</td>
+                                <td>${note.comment}</td>
+                                <td>
+                                    <c:forEach items="${note.employeeSurnames}" var="employee">
+                                        ${employee} <br/>
+                                    </c:forEach>
+                                </td>
                             </tr>
                         </c:forEach>
                     </table>

@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 
         try {
             if (user.getRole().equals(RoleConsts.USERS)){
-                orderList = orderDao.findAllOrdersById(user.getId());
+                orderList = orderDao.findAllOrdersByUserId(user.getId());
                 return new Wrapper.Builder()
                         .status(Status.SUCCESSFULL)
                         .message(orderList).build();
@@ -51,6 +51,16 @@ public class OrderServiceImpl implements OrderService {
         try {
             order.setStatus(OrderStatus.NEW);
             return orderDao.addNewOrder(order);
+        } catch (DaoException e) {
+            log.error(e);
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Order getOrderById(long orderId) throws ServiceException {
+        try {
+            return orderDao.findOrderById(orderId);
         } catch (DaoException e) {
             log.error(e);
             throw new ServiceException(e);

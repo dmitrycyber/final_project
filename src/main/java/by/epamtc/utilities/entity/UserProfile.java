@@ -1,6 +1,8 @@
 package by.epamtc.utilities.entity;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class UserProfile implements Serializable {
@@ -16,6 +18,8 @@ public class UserProfile implements Serializable {
     private int house;
     private int flat;
     private String building;
+    private String position;
+    private Timestamp hiringDate;
 
     public static class Builder {
         private long userId;
@@ -28,6 +32,8 @@ public class UserProfile implements Serializable {
         private int house;
         private int flat;
         private String building;
+        private String position;
+        private Timestamp hiringDate;
 
         public UserProfile.Builder userId(long userId) {
             this.userId = userId;
@@ -79,6 +85,16 @@ public class UserProfile implements Serializable {
             return this;
         }
 
+        public UserProfile.Builder position(String position) {
+            this.position = position;
+            return this;
+        }
+
+        public Builder hiringDate(Timestamp hiringDate){
+            this.hiringDate = hiringDate;
+            return this;
+        }
+
         public UserProfile build() {
             return new UserProfile(this);
         }
@@ -95,14 +111,12 @@ public class UserProfile implements Serializable {
         house = builder.house;
         flat = builder.flat;
         building = builder.building;
+        position = builder.position;
+        hiringDate = builder.hiringDate;
     }
 
-    public String getOldLogin() {
-        return oldLogin;
-    }
-
-    public void setOldLogin(String oldLogin) {
-        this.oldLogin = oldLogin;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public long getUserId() {
@@ -135,6 +149,14 @@ public class UserProfile implements Serializable {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getOldLogin() {
+        return oldLogin;
+    }
+
+    public void setOldLogin(String oldLogin) {
+        this.oldLogin = oldLogin;
     }
 
     public String getPhoneNumber() {
@@ -177,8 +199,20 @@ public class UserProfile implements Serializable {
         this.building = building;
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Timestamp getHiringDate() {
+        return hiringDate;
+    }
+
+    public void setHiringDate(Timestamp hiringDate) {
+        this.hiringDate = hiringDate;
     }
 
     @Override
@@ -192,14 +226,17 @@ public class UserProfile implements Serializable {
                 Objects.equals(name, that.name) &&
                 Objects.equals(surname, that.surname) &&
                 Objects.equals(login, that.login) &&
+                Objects.equals(oldLogin, that.oldLogin) &&
                 Objects.equals(phoneNumber, that.phoneNumber) &&
                 Objects.equals(street, that.street) &&
-                Objects.equals(building, that.building);
+                Objects.equals(building, that.building) &&
+                Objects.equals(position, that.position) &&
+                Objects.equals(hiringDate, that.hiringDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name, surname, login, phoneNumber, street, house, flat, building);
+        return Objects.hash(userId, name, surname, login, oldLogin, phoneNumber, street, house, flat, building, position, hiringDate);
     }
 
     @Override
@@ -209,11 +246,14 @@ public class UserProfile implements Serializable {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", login='" + login + '\'' +
+                ", oldLogin='" + oldLogin + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", street='" + street + '\'' +
                 ", house=" + house +
                 ", flat=" + flat +
                 ", building='" + building + '\'' +
+                ", position='" + position + '\'' +
+                ", hiringDate=" + hiringDate +
                 '}';
     }
 }
