@@ -34,6 +34,7 @@ public class RegistrationCommand implements Command {
     private final static String USER_EXIST = "userExist";
     private final static String LOGIN_PAGE_URL = "MainController?command=go_to_auth_page";
     private final static String REGISTRATION_PAGE_URL = "MainController?command=go_to_registration_page";
+    private final static String ERROR_PAGE_URL = "MainController?command=error_page";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -69,6 +70,7 @@ public class RegistrationCommand implements Command {
 
         } catch (ServiceException e) {
             log.error("Something wrong", e);
+            response.sendRedirect(ERROR_PAGE_URL);
         }
 
     }

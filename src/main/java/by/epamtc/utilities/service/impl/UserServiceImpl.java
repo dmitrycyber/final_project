@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 		User user;
 
 		try {
-			user = userDao.auth(authData);
+			user = userDao.authorizeUser(authData);
 		}
 		catch (DaoException e) {
 			throw new ServiceException(e);
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 		Wrapper<Object> obWrapper;
 		
 		try {
-			obWrapper = userDao.register(registrationData);
+			obWrapper = userDao.saveUser(registrationData);
 			return obWrapper;
 		} catch (DaoException e) {
 			throw new ServiceException(e);
@@ -51,9 +51,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserProfile getUserProfile(long userId) throws ServiceException {
+	public UserProfile findUserProfile(long userId) throws ServiceException {
 		try {
-			UserProfile userProfile = userDao.getUserProfile(userId);
+			UserProfile userProfile = userDao.findUserProfile(userId);
  			return userProfile;
 
 		} catch (DaoException e) {
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 		Wrapper<Object> obWrapper;
 
 		try {
-			obWrapper = userDao.editProfile(userProfile);
+			obWrapper = userDao.updateUserProfile(userProfile);
 			return obWrapper;
 		} catch (DaoException e) {
 			throw new ServiceException(e);
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 	}
 
     @Override
-    public Map<String, List<UserProfile>> getEmployeesByPositions() throws ServiceException {
+    public Map<String, List<UserProfile>> findEmployeesByPositions() throws ServiceException {
 
 		try {
 			final List<UserProfile> allByRole = userDao.findAllByRole(RoleConsts.EMPLOYEES);
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
-	public List<UserProfile> getAllEmployees() throws ServiceException {
+	public List<UserProfile> findAllEmployees() throws ServiceException {
 		try {
 			return userDao.findAllByRole(RoleConsts.EMPLOYEES);
 
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserProfile> getAllAdmins() throws ServiceException {
+	public List<UserProfile> findAllAdmins() throws ServiceException {
 		try {
 			return userDao.findAllAdmins();
 

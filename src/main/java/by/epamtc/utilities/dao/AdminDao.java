@@ -7,8 +7,5 @@ import by.epamtc.utilities.util.Wrapper;
 import java.util.List;
 
 public interface AdminDao {
-    List<User> getUsersByRole(String role) throws DaoException;
-
-
-
+    List<User> findUserByRole(String role) throws DaoException;
 }

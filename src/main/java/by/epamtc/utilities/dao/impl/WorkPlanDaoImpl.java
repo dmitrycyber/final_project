@@ -56,7 +56,7 @@ public class WorkPlanDaoImpl implements WorkPlanDao {
 
 
     @Override
-    public Wrapper<Object> processOrderNote(Note note) throws DaoException {
+    public Wrapper<Object> saveOrderNote(Note note) throws DaoException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 

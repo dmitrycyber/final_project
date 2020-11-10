@@ -20,12 +20,16 @@ public class AdminDaoImpl implements AdminDao {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private final Logger log = Logger.getLogger(AdminDaoImpl.class);
 
+    private final static String COLUMN_ID = "id";
+    private final static String COLUMN_LOGIN = "login";
+    private final static String COLUMN_ROLE = "role";
+
     private static final String SELECT_ADMINS = "SELECT u.id, u.login, r.role "
             + "FROM users u, user_roles ur, roles r "
             + "WHERE u.id=ur.user_id and ur.role_id=r.id and r.role=?;";
 
     @Override
-    public List<User> getUsersByRole(String role) throws DaoException {
+    public List<User> findUserByRole(String role) throws DaoException {
         List<User> adminList;
 
         Connection connection = null;
@@ -36,15 +40,15 @@ public class AdminDaoImpl implements AdminDao {
             adminList = new ArrayList<>();
             connection = connectionPool.takeConnection();
             preparedStatement = connection.prepareStatement(SELECT_ADMINS);
-            preparedStatement.setString(1, "admin");
+            preparedStatement.setString(1, RoleConsts.ADMINS);
 
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 final User admin = new User.Builder()
-                        .id(Integer.parseInt(resultSet.getString("id")))
-                        .login(resultSet.getString("login"))
-                        .role(resultSet.getString("role")).build();
+                        .id(Integer.parseInt(resultSet.getString(COLUMN_ID)))
+                        .login(resultSet.getString(COLUMN_LOGIN))
+                        .role(resultSet.getString(COLUMN_ROLE)).build();
 
                 adminList.add(admin);
 

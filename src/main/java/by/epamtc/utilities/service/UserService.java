@@ -15,13 +15,13 @@ public interface UserService {
 	
 	Wrapper<Object> registration(RegistrationData registrationData) throws ServiceException;
 
-    UserProfile getUserProfile(long id) throws ServiceException;
+    UserProfile findUserProfile(long id) throws ServiceException;
 
     Wrapper<Object> editUserProfile(UserProfile userProfile) throws ServiceException;
 
-    Map<String, List<UserProfile>> getEmployeesByPositions() throws ServiceException;
+    Map<String, List<UserProfile>> findEmployeesByPositions() throws ServiceException;
 
-    List<UserProfile> getAllEmployees() throws ServiceException;
+    List<UserProfile> findAllEmployees() throws ServiceException;
 
-    List<UserProfile> getAllAdmins() throws ServiceException;
+    List<UserProfile> findAllAdmins() throws ServiceException;
 }

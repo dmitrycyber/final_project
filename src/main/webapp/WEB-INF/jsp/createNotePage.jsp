@@ -141,7 +141,7 @@
 
                         <div class="parent-field">
                             Уборщики... <br/>
-                            <select name="cleaners">
+                            <select name="cleaners" multiple>
                                 <c:forEach items="${cleanersList}" var="empProfile">
                                     <option value="${empProfile.userId}">${empProfile.name} ${empProfile.surname}</option>
                                 </c:forEach>

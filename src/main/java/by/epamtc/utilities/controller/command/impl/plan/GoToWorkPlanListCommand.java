@@ -22,6 +22,7 @@ public class GoToWorkPlanListCommand implements Command {
 
     private final static String ATTRIBUTE_NOTES = "noteList";
     private final static String ATTRIBUTE_USER = "user";
+    private final static String ERROR_PAGE_URL = "MainController?command=error_page";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,16 +34,17 @@ public class GoToWorkPlanListCommand implements Command {
             final String role = user.getRole();
 
             if (role.equals(RoleConsts.EMPLOYEES)){
-                allNotes = workPlanService.getNotesByEmployeeId(user.getId());
+                allNotes = workPlanService.findNotesByEmployeeId(user.getId());
             }
             else {
-                allNotes = workPlanService.getAllNotes();
+                allNotes = workPlanService.findAllNotes();
             }
 
             request.setAttribute(ATTRIBUTE_NOTES, allNotes);
 
         } catch (ServiceException e) {
             log.error(e);
+            response.sendRedirect(ERROR_PAGE_URL);
         }
 
 

@@ -1,7 +1,6 @@
 package by.epamtc.utilities.controller.command.impl.plan;
 
 import by.epamtc.utilities.controller.command.Command;
-import by.epamtc.utilities.dao.impl.WorkPlanDaoImpl;
 import by.epamtc.utilities.entity.Note;
 import by.epamtc.utilities.entity.User;
 import by.epamtc.utilities.service.ServiceFactory;
@@ -37,6 +36,7 @@ public class CreateNoteCommand implements Command {
     private final static String END_DATE = "endDate";
 
     private final static String ORDERS_PAGE_URL = "MainController?command=go_to_orders_page";
+    private final static String ERROR_PAGE_URL = "MainController?command=error_page";
 
 
     @Override
@@ -75,6 +75,7 @@ public class CreateNoteCommand implements Command {
 
         } catch (ServiceException e) {
             log.error(e);
+            response.sendRedirect(ERROR_PAGE_URL);
         }
     }
 

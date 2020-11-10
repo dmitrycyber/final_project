@@ -6,5 +6,5 @@ import by.epamtc.utilities.service.exception.ServiceException;
 import java.util.List;
 
 public interface UnitService {
-    List<Unit> getAllUnits() throws ServiceException;
+    List<Unit> findAllUnits() throws ServiceException;
 }

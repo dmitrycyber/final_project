@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface WorkPlanDao {
 
-    Wrapper<Object> processOrderNote(Note note) throws DaoException;
+    Wrapper<Object> saveOrderNote(Note note) throws DaoException;
 
     List<Note> findAllNotes() throws DaoException;
 

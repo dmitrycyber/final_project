@@ -16,7 +16,7 @@ public interface OrderDao {
     Order findOrderById(long orderId) throws DaoException;
 
 
-    Wrapper<Object> addNewOrder(Order order) throws DaoException;
+    Wrapper<Object> saveNewOrder(Order order) throws DaoException;
 
 
 

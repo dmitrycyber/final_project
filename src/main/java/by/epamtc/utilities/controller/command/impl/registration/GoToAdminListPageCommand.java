@@ -1,8 +1,6 @@
 package by.epamtc.utilities.controller.command.impl.registration;
 
 import by.epamtc.utilities.controller.command.Command;
-import by.epamtc.utilities.dao.impl.AdminDaoImpl;
-import by.epamtc.utilities.entity.User;
 import by.epamtc.utilities.entity.UserProfile;
 import by.epamtc.utilities.service.AdminService;
 import by.epamtc.utilities.service.ServiceFactory;
@@ -25,16 +23,19 @@ public class GoToAdminListPageCommand implements Command {
 
     private final static String ATTRIBUTE_ADMIN_LIST = "adminList";
 
+    private final static String ERROR_PAGE_URL = "MainController?command=error_page";
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            final List<UserProfile> allAdmins = userService.getAllAdmins();
+            final List<UserProfile> allAdmins = userService.findAllAdmins();
 
             request.setAttribute(ATTRIBUTE_ADMIN_LIST, allAdmins);
 
         } catch (ServiceException e) {
             log.error(e);
+            response.sendRedirect(ERROR_PAGE_URL);
         }
 
         request.getRequestDispatcher("/WEB-INF/jsp/adminListPage.jsp").forward(request, response);

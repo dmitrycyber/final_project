@@ -40,6 +40,7 @@ public class CommandProvider {
 		commandMap.put(CommandName.CREATE_NOTE, new CreateNoteCommand());
 		commandMap.put(CommandName.GO_TO_EMPLOYEES_PAGE, new GoToEmployeePageCommand());
 		commandMap.put(CommandName.GO_TO_WORK_PLAN_LIST_PAGE, new GoToWorkPlanListCommand());
+		commandMap.put(CommandName.ERROR_PAGE, new GoToErrorPageCommand());
 
 	}
 	

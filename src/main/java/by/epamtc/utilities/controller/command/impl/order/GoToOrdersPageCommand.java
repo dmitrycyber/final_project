@@ -22,6 +22,8 @@ public class GoToOrdersPageCommand implements Command {
 
     private static final String ATTRIBUTE_USER = "user";
 
+    private final static String ERROR_PAGE_URL = "MainController?command=error_page";
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,9 +31,9 @@ public class GoToOrdersPageCommand implements Command {
         final User user = (User) request.getSession().getAttribute(ATTRIBUTE_USER);
 
         try {
-            final Wrapper<Object> wrapperObject = orderService.getOrderList(user);
+            final Wrapper<Object> wrapperObject = orderService.formOrderList(user);
             if (!wrapperObject.getStatus().equals(Status.SUCCESSFULL)){
-                //TODO redirect to error page
+                response.sendRedirect(ERROR_PAGE_URL);
             }
             final List<Order> orders = (List<Order>) wrapperObject.getMessage();
 
@@ -40,8 +42,7 @@ public class GoToOrdersPageCommand implements Command {
             log.info("ORDERS  " + orders);
 
         } catch (ServiceException e) {
-            //TODO redirect to error page
-            log.error(e);
+            response.sendRedirect(ERROR_PAGE_URL);
         }
 
 

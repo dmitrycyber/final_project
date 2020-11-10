@@ -20,7 +20,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Wrapper<Object> getOrderList(User user) throws ServiceException {
+    public Wrapper<Object> formOrderList(User user) throws ServiceException {
         final List<Order> orderList;
 
         try {
@@ -47,10 +47,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Wrapper<Object> addOrder(Order order) throws ServiceException {
+    public Wrapper<Object> saveNewOrder(Order order) throws ServiceException {
         try {
             order.setStatus(OrderStatus.NEW);
-            return orderDao.addNewOrder(order);
+            return orderDao.saveNewOrder(order);
         } catch (DaoException e) {
             log.error(e);
             throw new ServiceException(e);
@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderById(long orderId) throws ServiceException {
+    public Order findOrderById(long orderId) throws ServiceException {
         try {
             return orderDao.findOrderById(orderId);
         } catch (DaoException e) {

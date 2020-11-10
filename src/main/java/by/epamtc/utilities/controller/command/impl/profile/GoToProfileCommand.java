@@ -6,6 +6,7 @@ import by.epamtc.utilities.entity.UserProfile;
 import by.epamtc.utilities.service.ServiceFactory;
 import by.epamtc.utilities.service.UserService;
 import by.epamtc.utilities.service.exception.ServiceException;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +15,16 @@ import java.io.IOException;
 
 public class GoToProfileCommand implements Command {
     private final UserService userService = ServiceFactory.getInstance().getUserService();
+    private final Logger log = Logger.getLogger(GoToProfileCommand.class);
 
     private final static String ATTRIBUTE_USER = "user";
 
     private final static String ATTRIBUTE_USER_PROFILE = "userProfile";
 
     private final static String PARAMETER_ADMIN_ID = "adminId";
+
+    private final static String ERROR_PAGE_URL = "MainController?command=error_page";
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,12 +38,12 @@ public class GoToProfileCommand implements Command {
         }
 
         try {
-            UserProfile userProfile = userService.getUserProfile(userId);
+            UserProfile userProfile = userService.findUserProfile(userId);
 
             request.setAttribute(ATTRIBUTE_USER_PROFILE, userProfile);
         } catch (ServiceException e) {
-            //TODO error
-            e.printStackTrace();
+            log.error(e);
+            response.sendRedirect(ERROR_PAGE_URL);
         }
 
         request.getRequestDispatcher("/WEB-INF/jsp/userProfile.jsp").forward(request, response);

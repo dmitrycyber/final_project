@@ -35,6 +35,8 @@ public class ChangeProfileCommand implements Command {
     private final static String USER_EXIST = "userExist";
 
     private final static String USER_PROFILE_PAGE = "MainController?command=profile";
+    private final static String ERROR_PAGE_URL = "MainController?command=error_page";
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -74,6 +76,7 @@ public class ChangeProfileCommand implements Command {
 
         } catch (ServiceException e) {
             e.printStackTrace();
+            response.sendRedirect(ERROR_PAGE_URL);
         }
     }
 }

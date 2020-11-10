@@ -1,7 +1,6 @@
 package by.epamtc.utilities.controller.command.impl.plan;
 
 import by.epamtc.utilities.controller.command.Command;
-import by.epamtc.utilities.controller.command.impl.order.GoToCreateOrderPageCommand;
 import by.epamtc.utilities.entity.Order;
 import by.epamtc.utilities.entity.UserProfile;
 import by.epamtc.utilities.service.OrderService;
@@ -25,6 +24,7 @@ public class GoToWorkPlaneAddNoteCommand implements Command {
     private final static String PARAMETER_ORDER_ID = "orderId";
     private final static String ATTRIBUTE_ORDER = "order";
     private final static String ATTRIBUTE_EMPLOYEES_BY_POSITIONS = "employeeMap";
+    private final static String ERROR_PAGE_URL = "MainController?command=error_page";
 
 
     @Override
@@ -32,9 +32,9 @@ public class GoToWorkPlaneAddNoteCommand implements Command {
         final long orderId = Long.parseLong(request.getParameter(PARAMETER_ORDER_ID));
 
         try {
-            final Order orderById = orderService.getOrderById(orderId);
+            final Order orderById = orderService.findOrderById(orderId);
 
-            final Map<String, List<UserProfile>> employeesByPositions = userService.getEmployeesByPositions();
+            final Map<String, List<UserProfile>> employeesByPositions = userService.findEmployeesByPositions();
 
             request.setAttribute(ATTRIBUTE_ORDER, orderById);
 
@@ -42,6 +42,7 @@ public class GoToWorkPlaneAddNoteCommand implements Command {
 
         } catch (ServiceException e) {
             log.error(e);
+            response.sendRedirect(ERROR_PAGE_URL);
         }
 
         request.getRequestDispatcher("/WEB-INF/jsp/createNotePage.jsp").forward(request, response);

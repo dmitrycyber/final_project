@@ -15,7 +15,7 @@ public class UnitServiceImpl implements UnitService {
     private final Logger log = Logger.getLogger(UserServiceImpl.class);
 
     @Override
-    public List<Unit> getAllUnits() throws ServiceException {
+    public List<Unit> findAllUnits() throws ServiceException {
         try {
             final List<Unit> allUnits = unitDao.findAllUnits();
             return allUnits;

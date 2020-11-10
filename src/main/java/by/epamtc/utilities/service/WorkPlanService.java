@@ -11,7 +11,7 @@ public interface WorkPlanService {
 
     Wrapper<Object> addNewNote(Note note) throws ServiceException;
 
-    List<Note> getAllNotes() throws ServiceException;
+    List<Note> findAllNotes() throws ServiceException;
 
-    List<Note> getNotesByEmployeeId(long employeeId) throws ServiceException;
+    List<Note> findNotesByEmployeeId(long employeeId) throws ServiceException;
 }

@@ -15,9 +15,9 @@ public class AdminServiceImpl implements AdminService {
     private final Logger log = Logger.getLogger(AdminServiceImpl.class);
 
     @Override
-    public List<User> getAdmins(String role) throws ServiceException {
+    public List<User> findAdmins(String role) throws ServiceException {
         try {
-            return adminDao.getUsersByRole(role);
+            return adminDao.findUserByRole(role);
         } catch (DaoException e) {
             log.error(e);
             throw new ServiceException(e);

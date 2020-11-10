@@ -48,7 +48,6 @@ public class AuthCommand implements Command {
 
             response.sendRedirect(CABINET_PAGE_URL);
         } catch (ServiceException e) {
-
             session.setAttribute(INVALID_DATA, true);
             response.sendRedirect(MAIN_PAGE_URL);
         }

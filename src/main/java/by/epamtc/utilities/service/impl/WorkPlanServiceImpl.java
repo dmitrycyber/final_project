@@ -19,7 +19,7 @@ public class WorkPlanServiceImpl implements WorkPlanService {
     @Override
     public Wrapper<Object> addNewNote(Note note) throws ServiceException {
         try {
-            return workPlanDao.processOrderNote(note);
+            return workPlanDao.saveOrderNote(note);
         } catch (DaoException e) {
             log.error(e);
             throw new ServiceException(e);
@@ -27,7 +27,7 @@ public class WorkPlanServiceImpl implements WorkPlanService {
     }
 
     @Override
-    public List<Note> getAllNotes() throws ServiceException {
+    public List<Note> findAllNotes() throws ServiceException {
         try {
             return workPlanDao.findAllNotes();
         } catch (DaoException e) {
@@ -36,7 +36,7 @@ public class WorkPlanServiceImpl implements WorkPlanService {
     }
 
     @Override
-    public List<Note> getNotesByEmployeeId(long employeeId) throws ServiceException {
+    public List<Note> findNotesByEmployeeId(long employeeId) throws ServiceException {
         try {
             return workPlanDao.findAllNotesByEmployeeId(employeeId);
         } catch (DaoException e) {

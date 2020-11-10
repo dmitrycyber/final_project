@@ -21,6 +21,8 @@ public class OrderDaoImpl implements OrderDao {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private final Logger log = Logger.getLogger(OrderDaoImpl.class);
 
+
+
     private static final String SELECT_ALL_ORDERS =
             "SELECT o.id, o.work_type_id, o.user_id, o.scale_units, o.scale_value, o.date_start, o.date_finish, o.severity, o.description, o.status, o.dispatcher_comment, wt.work_type, un.title, us.name, us.surname, us.street, us.house, us.flat, us.building "
             + "FROM orders o, work_types wt, units un, users us "
@@ -197,7 +199,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Wrapper<Object> addNewOrder(Order order) throws DaoException {
+    public Wrapper<Object> saveNewOrder(Order order) throws DaoException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 

@@ -61,7 +61,7 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public User auth(AuthData authData) throws DaoException {
+	public User authorizeUser(AuthData authData) throws DaoException {
 		User user;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -108,7 +108,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public Wrapper<Object> register(RegistrationData registrationData) throws DaoException {
+	public Wrapper<Object> saveUser(RegistrationData registrationData) throws DaoException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -152,7 +152,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public UserProfile getUserProfile(long userId) throws DaoException {
+	public UserProfile findUserProfile(long userId) throws DaoException {
 		UserProfile profile;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -196,7 +196,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public Wrapper<Object> editProfile(UserProfile userProfile) throws DaoException {
+	public Wrapper<Object> updateUserProfile(UserProfile userProfile) throws DaoException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 

@@ -34,6 +34,8 @@ public class CreateOrderCommand implements Command {
 
     private final static String ATTRIBUTE_USER = "user";
 
+    private final static String ERROR_PAGE_URL = "MainController?command=error_page";
+
 
 
     @Override
@@ -52,13 +54,14 @@ public class CreateOrderCommand implements Command {
                 .description(request.getParameter(DESCRIPTION)).build();
 
         try {
-            final Wrapper<Object> objectWrapper = orderService.addOrder(order);
+            final Wrapper<Object> objectWrapper = orderService.saveNewOrder(order);
             if (objectWrapper.getStatus().equals(Status.SUCCESSFULL)){
                 response.sendRedirect(CREATE_ORDERS_PAGE_URL);
             }
 
         } catch (ServiceException e) {
             log.error(e);
+            response.sendRedirect(ERROR_PAGE_URL);
         }
     }
 }

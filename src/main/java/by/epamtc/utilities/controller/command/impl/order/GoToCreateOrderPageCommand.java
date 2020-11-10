@@ -23,23 +23,24 @@ public class GoToCreateOrderPageCommand implements Command {
     private static final String ATTRIBUTE_WORK_TYPES_LIST = "workTypes";
     private static final String ATTRIBUTE_UNITS_LIST = "units";
 
+    private final static String ERROR_PAGE_URL = "MainController?command=error_page";
+
 
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            final List<Unit> units = unitService.getAllUnits();
+            final List<Unit> units = unitService.findAllUnits();
             final List<WorkType> workTypes = workTypeService.allWorkTypes();
 
             request.setAttribute(ATTRIBUTE_UNITS_LIST, units);
             request.setAttribute(ATTRIBUTE_WORK_TYPES_LIST, workTypes);
 
+            request.getRequestDispatcher("/WEB-INF/jsp/addOrderPage.jsp").forward(request, response);
 
         } catch (ServiceException e) {
             log.error(e);
+            response.sendRedirect(ERROR_PAGE_URL);
         }
-
-
-        request.getRequestDispatcher("/WEB-INF/jsp/addOrderPage.jsp").forward(request, response);
     }
 }

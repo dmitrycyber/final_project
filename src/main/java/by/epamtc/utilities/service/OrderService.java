@@ -6,9 +6,9 @@ import by.epamtc.utilities.service.exception.ServiceException;
 import by.epamtc.utilities.util.Wrapper;
 
 public interface OrderService {
-    Wrapper<Object> getOrderList(User user) throws ServiceException;
+    Wrapper<Object> formOrderList(User user) throws ServiceException;
 
-    Wrapper<Object> addOrder(Order order) throws ServiceException;
+    Wrapper<Object> saveNewOrder(Order order) throws ServiceException;
 
-    Order getOrderById(long orderId) throws ServiceException;
+    Order findOrderById(long orderId) throws ServiceException;
 }
