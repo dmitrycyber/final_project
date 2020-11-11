@@ -88,18 +88,13 @@ public class UserDaoImpl implements UserDao {
 					.role(resultSet.getString("role"))
 					.name(resultSet.getString("name")).build();
 
-//			user = new User();
-//			user.setId(Integer.parseInt(resultSet.getString("id")));
-//			user.setLogin(resultSet.getString("login"));
-//			user.setRole(resultSet.getString("role"));
-
 			return user;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error(e);
 			throw new DaoException(e);
 		} catch (ConnectionException e) {
-			e.printStackTrace();
+			log.error(e);
 			throw new DaoException(e);
 		} finally {
 			connectionPool.closeConnection(connection, preparedStatement, resultSet);
@@ -141,10 +136,10 @@ public class UserDaoImpl implements UserDao {
 			return new Wrapper.Builder().status(Status.SUCCESSFULL).build();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error(e);
 			throw new DaoException(e);
 		} catch (ConnectionException e) {
-			e.printStackTrace();
+			log.error(e);
 			throw new DaoException(e);
 		} finally {
 			connectionPool.closeConnection(connection, preparedStatement);
@@ -186,10 +181,10 @@ public class UserDaoImpl implements UserDao {
 			return profile;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error(e);
 			throw new DaoException(e);
 		} catch (ConnectionException e) {
-			e.printStackTrace();
+			log.error(e);
 			throw new DaoException(e);
 		} finally {
 			connectionPool.closeConnection(connection, preparedStatement, resultSet);
@@ -229,10 +224,10 @@ public class UserDaoImpl implements UserDao {
 			return new Wrapper.Builder().status(Status.SUCCESSFULL).build();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error(e);
 			throw new DaoException(e);
 		} catch (ConnectionException e) {
-			e.printStackTrace();
+			log.error(e);
 			throw new DaoException(e);
 		} finally {
 			connectionPool.closeConnection(connection, preparedStatement);

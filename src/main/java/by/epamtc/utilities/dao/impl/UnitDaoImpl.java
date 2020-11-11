@@ -50,7 +50,7 @@ public class UnitDaoImpl implements UnitDao {
             return unitTitle;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
             throw new DaoException(e);
         } catch (ConnectionException e) {
             log.error(e);
@@ -83,7 +83,7 @@ public class UnitDaoImpl implements UnitDao {
             return units;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
             throw new DaoException(e);
         } catch (ConnectionException e) {
             log.error(e);

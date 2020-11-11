@@ -51,7 +51,7 @@ public class WorkTypeDaoImpl implements WorkTypeDao {
             return workType;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
             throw new DaoException(e);
         } catch (ConnectionException e) {
             log.error(e);
@@ -84,7 +84,7 @@ public class WorkTypeDaoImpl implements WorkTypeDao {
             return workTypes;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
             throw new DaoException(e);
         } catch (ConnectionException e) {
             log.error(e);

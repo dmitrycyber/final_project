@@ -75,11 +75,8 @@ public class WorkPlanDaoImpl implements WorkPlanDao {
                 updateUserOrder(note, connection, note.isDecline());
             }
             return new Wrapper.Builder<>().status(Status.SUCCESSFULL).build();
-//        } catch (DaoException e) {
-//            e.printStackTrace();
-//            throw new DaoException(e);
         } catch (ConnectionException e) {
-            e.printStackTrace();
+            log.error(e);
             throw new DaoException(e);
         } finally {
             connectionPool.closeConnection(connection, preparedStatement);
