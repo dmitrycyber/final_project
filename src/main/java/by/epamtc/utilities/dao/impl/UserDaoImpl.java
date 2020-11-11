@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao {
 	private final Logger log = Logger.getLogger(UserDaoImpl.class);
 
 
-	private static final String SELECT_USER_BY_LOGIN = "SELECT u.id, u.login, r.role "
+	private static final String SELECT_USER_BY_LOGIN = "SELECT u.id, u.login, r.role, u.name "
 			+ "FROM users u, user_roles ur, roles r "
 			+ "WHERE u.login=? and u.password=? and u.id = ur.user_id and ur.role_id = r.id;";
 	
@@ -85,7 +85,8 @@ public class UserDaoImpl implements UserDao {
 			user = new User.Builder()
 					.id(Integer.parseInt(resultSet.getString("id")))
 					.login(resultSet.getString("login"))
-					.role(resultSet.getString("role")).build();
+					.role(resultSet.getString("role"))
+					.name(resultSet.getString("name")).build();
 
 //			user = new User();
 //			user.setId(Integer.parseInt(resultSet.getString("id")));

@@ -33,11 +33,19 @@
         <section class="welcome-section">
             <div class="wrapper-welcome-section">
                 <div class="card-title">${title}</div>
-                <c:if test="${user.role eq roleConsts.ADMIN}">
-                    <div class="parent-submit-btn">
-                        <button type="submit" class="submit-btn">Создать администратора</button>
-                    </div>
-                </c:if>
+<%--                <c:if test="${user.role eq roleConsts.ADMIN}">--%>
+<%--                    <div class="parent-submit-btn">--%>
+<%--                        <button type="submit" class="submit-btn">Создать администратора</button>--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
+                <form action="MainController" class="auth-form">
+                    <input type="hidden" name="command" value="go_to_create_admin">
+                    <c:if test="${user.role eq roleConsts.ADMIN}">
+                        <div class="parent-submit-btn">
+                            <button type="submit" class="submit-btn">Создать администратора</button>
+                        </div>
+                    </c:if>
+                </form>
                 <div class="info-block-adv">
                     <table border="1">
                         <tr>

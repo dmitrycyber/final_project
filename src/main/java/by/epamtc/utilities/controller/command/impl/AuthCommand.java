@@ -41,8 +41,8 @@ public class AuthCommand implements Command {
         	AuthData authData = new AuthData();
         	authData.setLogin(login);
         	authData.setPassword(password);
-            session.removeAttribute(INVALID_DATA);
             user = userService.login(authData);
+            session.removeAttribute(INVALID_DATA);
 
             session.setAttribute(SESSION_ATTRIBUTE_USER, user);
 

@@ -1,6 +1,7 @@
 package by.epamtc.utilities.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -8,11 +9,13 @@ public class User implements Serializable{
 	private long id;
 	private String login;
 	private String role;
+	private String name;
 
 	public static class Builder{
 		private long id;
 		private String login;
 		private String role;
+		private String name;
 
 		public Builder id(int id) {
 			this.id = id;
@@ -29,6 +32,11 @@ public class User implements Serializable{
 			return this;
 		}
 
+		public Builder name(String name){
+			this.name = name;
+			return this;
+		}
+
 		public User build(){
 			return new User(this);
 		}
@@ -41,6 +49,7 @@ public class User implements Serializable{
 		id = builder.id;
 		login = builder.login;
 		role = builder.role;
+		name = builder.name;
 	}
 
 	public long getId() {
@@ -67,47 +76,37 @@ public class User implements Serializable{
 		this.role = role;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return id == user.id &&
+				Objects.equals(login, user.login) &&
+				Objects.equals(role, user.role) &&
+				Objects.equals(name, user.name);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		return result;
+		return Objects.hash(id, login, role, name);
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (id != other.id)
-			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
-			return false;
-		if (role == null) {
-			if (other.role != null)
-				return false;
-		} else if (!role.equals(other.role))
-			return false;
-		return true;
-	}
-	
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", role=" + role + "]";
+		return "User{" +
+				"id=" + id +
+				", login='" + login + '\'' +
+				", role='" + role + '\'' +
+				", name='" + name + '\'' +
+				'}';
 	}
-	
-	
-	
-	
-
 }

@@ -27,14 +27,19 @@
 
         <section class="welcome-section">
             <div class="wrapper-welcome-section">
-                <div class="card-title">${title}, ${user.login}!</div>
+                <div class="card-title">${title}, ${user.name}!</div>
                 <div class="info-block-adv">
-                    <div class="parent-div">
-                        <div class="card-style">Предложения для пользователя.. TODO</div>
-                    </div>
-                    <div class="parent-div">
-                        <div class="card-style">Предложения для пользователя.. TODO</div>
-                    </div>
+                    Адрес ЖКХ: <br/>
+                    Минск, ул. Ротмистрова д. 2, корпус 13 <br/>
+                    <br/>
+                    Телефоны ЖКХ:<br/>
+                    8 029 640 44 77 <br/>
+                    8 029 649 90 46 <br/>
+                    8 029 649 00 21 <br/>
+                    8 029 648 82 03 <br/>
+                    8 029 008 56 20 (дежурный) <br/>
+                    8 029 588 02 02<br/>
+                    <br/>
                 </div>
             </div>
         </section>
