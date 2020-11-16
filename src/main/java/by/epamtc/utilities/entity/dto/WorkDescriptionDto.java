@@ -1,6 +1,5 @@
-package by.epamtc.utilities.dto;
+package by.epamtc.utilities.entity.dto;
 
-import java.io.BufferedOutputStream;
 import java.io.Serializable;
 import java.util.Objects;
 

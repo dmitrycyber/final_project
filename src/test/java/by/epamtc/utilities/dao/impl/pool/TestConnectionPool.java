@@ -1,6 +1,7 @@
-package by.epamtc.utilities.dao.source;
+package by.epamtc.utilities.dao.impl.pool;
 
 
+import by.epamtc.utilities.dao.source.ConnectionException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -10,9 +11,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
-public class ConnectionPool {
-    private static ConnectionPool instance;
-    private final static Logger log = Logger.getLogger(ConnectionPool.class);
+public class TestConnectionPool {
+    private static TestConnectionPool instance;
+    private final static Logger log = Logger.getLogger(TestConnectionPool.class);
 
 
     private BlockingQueue<Connection> connectionQueue;
@@ -23,15 +24,15 @@ public class ConnectionPool {
     private final String password;
     private int poolSize;
 
-    private ConnectionPool() {
-        DBResourceManager dbResourceManager = DBResourceManager.getInstance();
-        this.url = dbResourceManager.getValue(DBParameter.DB_URL);
-        this.user = dbResourceManager.getValue(DBParameter.DB_USER);
-        this.password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
+    private TestConnectionPool() {
+        TestDBResourceManager testDbResourceManager = TestDBResourceManager.getInstance();
+        this.url = testDbResourceManager.getValue(TestDBParameter.DB_URL);
+        this.user = testDbResourceManager.getValue(TestDBParameter.DB_USER);
+        this.password = testDbResourceManager.getValue(TestDBParameter.DB_PASSWORD);
 
         try {
-            this.poolSize = Integer.parseInt(dbResourceManager.getValue(
-                    DBParameter.DB_POOL_SIZE));
+            this.poolSize = Integer.parseInt(testDbResourceManager.getValue(
+                    TestDBParameter.DB_POOL_SIZE));
         } catch (NumberFormatException e) {
             log.error("Wrong number format of connection pool size");
             poolSize = 5;
@@ -45,7 +46,7 @@ public class ConnectionPool {
 
     public void initPoolData() throws ConnectionException {
         try {
-            Class.forName(DBResourceManager.getInstance().getValue(DBParameter.DB_DRIVER));
+            Class.forName(TestDBResourceManager.getInstance().getValue(TestDBParameter.DB_DRIVER));
             givenAwayConnectionQueue = new ArrayBlockingQueue<>(poolSize);
             connectionQueue = new ArrayBlockingQueue<>(poolSize);
 
@@ -82,6 +83,7 @@ public class ConnectionPool {
         try {
             connection = connectionQueue.take();
             givenAwayConnectionQueue.add(connection);
+            log.info("URL " + url);
         } catch (InterruptedException e) {
             log.error("Error connecting to the data source.", e);
             throw new ConnectionException("Error connecting to the data source.", e);
@@ -120,14 +122,6 @@ public class ConnectionPool {
 //        }
     }
 
-    public void closeConnection(Connection con) {
-        try {
-            con.close();
-        } catch (SQLException e) {
-            log.error("SQL exception close connection", e);
-        }
-    }
-
     public void closeConnection(Statement st, ResultSet rs) {
         try {
             rs.close();
@@ -149,6 +143,14 @@ public class ConnectionPool {
         }
     }
 
+    public void closeConnection(Connection con) {
+        try {
+            con.close();
+        } catch (SQLException e) {
+            log.error("SQL exception close connection", e);
+        }
+    }
+
     private void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException {
         Connection connection;
 
@@ -162,9 +164,9 @@ public class ConnectionPool {
         }
     }
 
-    public static ConnectionPool getInstance() {
+    public static TestConnectionPool getInstance() {
         if (instance == null){
-            return new ConnectionPool();
+            return new TestConnectionPool();
         }
         return instance;
     }

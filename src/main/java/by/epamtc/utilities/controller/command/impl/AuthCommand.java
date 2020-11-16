@@ -13,6 +13,7 @@ import by.epamtc.utilities.entity.User;
 import by.epamtc.utilities.service.ServiceFactory;
 import by.epamtc.utilities.service.UserService;
 import by.epamtc.utilities.service.exception.ServiceException;
+import by.epamtc.utilities.service.exception.ServiceUserNotFoundException;
 import org.apache.log4j.Logger;
 
 public class AuthCommand implements Command {
@@ -47,7 +48,7 @@ public class AuthCommand implements Command {
             session.setAttribute(SESSION_ATTRIBUTE_USER, user);
 
             response.sendRedirect(CABINET_PAGE_URL);
-        } catch (ServiceException e) {
+        } catch (ServiceException | ServiceUserNotFoundException e) {
             session.setAttribute(INVALID_DATA, true);
             response.sendRedirect(MAIN_PAGE_URL);
         }

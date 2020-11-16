@@ -3,16 +3,19 @@ package by.epamtc.utilities.service.impl;
 import by.epamtc.utilities.dao.DaoFactory;
 import by.epamtc.utilities.dao.UserDao;
 import by.epamtc.utilities.dao.exception.DaoException;
+import by.epamtc.utilities.dao.exception.DaoUserAuthException;
 import by.epamtc.utilities.entity.AuthData;
 import by.epamtc.utilities.entity.RegistrationData;
 import by.epamtc.utilities.entity.User;
 import by.epamtc.utilities.entity.UserProfile;
 import by.epamtc.utilities.service.UserService;
 import by.epamtc.utilities.service.exception.ServiceException;
+import by.epamtc.utilities.service.exception.ServiceUserNotFoundException;
 import by.epamtc.utilities.util.RoleConsts;
 import by.epamtc.utilities.util.Wrapper;
 import org.apache.log4j.Logger;
 
+import javax.management.ServiceNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,7 +28,7 @@ public class UserServiceImpl implements UserService {
 //	private static final String EMPLOYEE_ROLE = "employee";
 
 	@Override
-	public User login(AuthData authData) throws ServiceException {
+	public User login(AuthData authData) throws ServiceException, ServiceUserNotFoundException {
 		User user;
 
 		try {
@@ -33,6 +36,8 @@ public class UserServiceImpl implements UserService {
 		}
 		catch (DaoException e) {
 			throw new ServiceException(e);
+		} catch (DaoUserAuthException e) {
+			throw new ServiceUserNotFoundException(e);
 		}
 		return user;
 	}

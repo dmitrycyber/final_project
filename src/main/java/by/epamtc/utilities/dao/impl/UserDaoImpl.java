@@ -9,6 +9,7 @@ import java.util.List;
 
 import by.epamtc.utilities.dao.UserDao;
 import by.epamtc.utilities.dao.exception.DaoException;
+import by.epamtc.utilities.dao.exception.DaoUserAuthException;
 import by.epamtc.utilities.dao.source.ConnectionException;
 import by.epamtc.utilities.dao.source.ConnectionPool;
 import by.epamtc.utilities.entity.AuthData;
@@ -61,7 +62,7 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public User authorizeUser(AuthData authData) throws DaoException {
+	public User authorizeUser(AuthData authData) throws DaoException, DaoUserAuthException {
 		User user;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -79,7 +80,7 @@ public class UserDaoImpl implements UserDao {
 
 			if (!resultSet.next()){
 				log.warn("user not found");
-				throw new DaoException("User not found");
+				throw new DaoUserAuthException("User not found");
 			}
 
 			user = new User.Builder()
@@ -99,8 +100,6 @@ public class UserDaoImpl implements UserDao {
 		} finally {
 			connectionPool.closeConnection(connection, preparedStatement, resultSet);
 		}
-
-
 	}
 
 	@Override

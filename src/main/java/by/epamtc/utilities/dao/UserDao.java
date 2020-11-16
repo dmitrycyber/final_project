@@ -1,6 +1,7 @@
 package by.epamtc.utilities.dao;
 
 import by.epamtc.utilities.dao.exception.DaoException;
+import by.epamtc.utilities.dao.exception.DaoUserAuthException;
 import by.epamtc.utilities.entity.AuthData;
 import by.epamtc.utilities.entity.RegistrationData;
 import by.epamtc.utilities.entity.User;
@@ -23,7 +24,7 @@ public interface UserDao {
      * @return User object of user
      * @throws DaoException if something wos wrong in database activity
      */
-    User authorizeUser(AuthData authorizationData) throws DaoException;
+    User authorizeUser(AuthData authorizationData) throws DaoException, DaoUserAuthException;
 
     /**
      * Registration user

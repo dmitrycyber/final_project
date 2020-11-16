@@ -30,6 +30,7 @@ public class WorkTypeDaoImpl implements WorkTypeDao {
     public String findWorkTypeById(long workTypeId) throws DaoException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        
         ResultSet resultSet = null;
         String workType;
 
