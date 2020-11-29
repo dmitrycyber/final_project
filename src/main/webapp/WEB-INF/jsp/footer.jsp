@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
 
+<%@ taglib uri="http://127.0.0.1:8080/customTag" prefix="customTag" %>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -15,7 +17,8 @@
     <footer class="footer">
         <div class="wrapper-footer">
             <div class="footer-info">
-                <div>Ⓒ 2020 All Right Reserved</div>
+<%--                <div>Ⓒ 2020 All Right Reserved</div>--%>
+                <div><customTag:footerMessage footerMessage="Ⓒ 2020 All Right Reserved"/></div>
             </div>
         </div>
     </footer>

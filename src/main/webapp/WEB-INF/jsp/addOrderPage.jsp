@@ -2,11 +2,11 @@
          pageEncoding="utf-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<jsp:useBean id="user" class="by.epamtc.utilities.entity.User" scope="session"/>
+<%@ taglib uri="http://127.0.0.1:8080/customTag" prefix="customTag" %>
 
+<jsp:useBean id="user" class="by.epamtc.utilities.entity.User" scope="session"/>
 <jsp:useBean id="units" type="java.util.List<by.epamtc.utilities.entity.Unit>" scope="request"/>
 <jsp:useBean id="workTypes" type="java.util.List<by.epamtc.utilities.entity.WorkType>" scope="request"/>
-
 
 <fmt:setLocale value="${sessionScope.local}"/>
 <fmt:setBundle basename="prop" var="local"/>
@@ -60,7 +60,7 @@
                             </select>
                         </div>
                         <div class="parent-field">
-                            <input type="text" name="scaleValue" placeholder="Количество">
+                            <input type="text" name="scaleValue" placeholder="Количество" pattern="^\d{1,5}$" title="от 1 до 5 цифр" required>
                         </div>
                         <div class="parent-field">
                             Единицы:
@@ -71,17 +71,13 @@
                             </select>
                         </div>
                         <div class="parent-field">
-<%--                            <label for="datepicker"></label>--%>
-                            <input type="datetime-local" name="startDate" id="datepicker" placeholder="Старт работ">
+                            <input type="datetime-local" name="startDate" id="datepicker" placeholder="Старт работ"
+                                   min="<customTag:customDate/>" required>
                         </div>
                         <div class="parent-field">
-<%--                            <label for="datepicker1"></label>--%>
-                            <input type="datetime-local" name="endDate" id="datepicker1" placeholder="Окончание работ">
+                            <input type="datetime-local" name="endDate" id="datepicker1" placeholder="Окончание работ"
+                                   min="<customTag:customDate/>" required>
                         </div>
-<%--                        <div class="parent-field">--%>
-<%--                            Не срочная--%>
-<%--                            <input type="radio" name="isSeveral" value="false">--%>
-<%--                        </div>--%>
                         <div class="parent-field">
                             <input type="text" name="description" placeholder="Описание">
                         </div>

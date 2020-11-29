@@ -30,31 +30,31 @@
                     <form action="MainController" class="auth-form">
                         <input type="hidden" name="command" value="registration">
                         <div class="parent-field">
-                            <input type="text" name="name" placeholder="Ваше имя">
+                            <input type="text" name="name" placeholder="Ваше имя" pattern="^[A-zА-я]{1,20}$" title="только латиница или кириллица от 1 до 20 символов" required>
                         </div>
                         <div class="parent-field">
-                            <input type="text" name="surname" placeholder="Ваша фамилия">
+                            <input type="text" name="surname" placeholder="Ваша фамилия" pattern="^[A-zА-я]{1,20}$" title="только латиница или кириллица от 1 до 20 символов" required>
                         </div>
                         <div class="parent-field">
-                            <input type="text" name="login" placeholder="Ваш логин">
+                            <input type="text" name="login" placeholder="Ваш логин" required>
                         </div>
                         <div class="parent-field">
                             <input type="password" name="password" placeholder="Пароль" required>
                         </div>
                         <div class="parent-field">
-                            <input type="text" name="phoneNumber" placeholder="Телефон" required>
+                            <input type="text" name="phoneNumber" placeholder="Телефон" pattern="^\+375(29|33|44)\d{7}$" title="+375291111111" required>
                         </div>
                         <div class="parent-field">
                             <input type="text" name="street" placeholder="Улица" required>
                         </div>
                         <div class="parent-field">
-                            <input type="text" name="house" placeholder="Дом" required>
+                            <input type="text" name="house" placeholder="Дом" pattern="^\d{1,5}$" title="от 1 до 5 цифр" required>
                         </div>
                         <div class="parent-field">
-                            <input type="text" name="building" placeholder="Корпус" required>
+                            <input type="text" name="building" placeholder="Корпус" pattern="^\d{1,5}$" title="от 1 до 5 цифр">
                         </div>
                         <div class="parent-field">
-                            <input type="text" name="flat" placeholder="Квартира" required>
+                            <input type="text" name="flat" placeholder="Квартира" pattern="^\d{1,5}$" title="от 1 до 5 цифр" required>
                         </div>
 
 
