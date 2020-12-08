@@ -29,6 +29,7 @@ public class AdminDaoImpl implements AdminDao {
             + "WHERE u.id=ur.user_id and ur.role_id=r.id and r.role=?;";
 
     @Override
+
     public List<User> findUserByRole(String role) throws DaoException {
         List<User> adminList;
 

@@ -30,18 +30,6 @@
             <div class="wrapper-welcome-section">
                 <div class="card-title">${title}</div>
                 <div class="info-block-adv">
-                    <%--                    <div class="parent-div">--%>
-                    <%--                        РЕКЛАМА 1--%>
-                    <%--                        <div class="card-style">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</div>--%>
-                    <%--                    </div>--%>
-                    <%--                    <div class="parent-div">--%>
-                    <%--                        РЕКЛАМА 2--%>
-                    <%--                        <div class="card-style">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</div>--%>
-                    <%--                    </div>--%>
-                    <%--                    <div class="parent-div">--%>
-                    <%--                        РЕКЛАМА 3--%>
-                    <%--                        <div class="card-style">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</div>--%>
-                    <%--                    </div>--%>
                     ООО "ШАБАНЫ ЖКХ-СЕРВИС" презентовала на 11 Минском Международном инновационном форуме "ТОЧНЫЕ
                     ИЗМЕРЕНИЯ - ОСНОВА КАЧЕСТВА И БЕЗОПАСНОСТИ" новый профсоюз - "Всероссийский Профсоюз Метрологов".
                     ЖКХ-Сервис уже более 6 лет проводит поверку счетчиков холодной и горячей воды на месте установки без

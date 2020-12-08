@@ -17,7 +17,6 @@
     <footer class="footer">
         <div class="wrapper-footer">
             <div class="footer-info">
-<%--                <div>Ⓒ 2020 All Right Reserved</div>--%>
                 <div><customTag:footerMessage footerMessage="Ⓒ 2020 All Right Reserved"/></div>
             </div>
         </div>

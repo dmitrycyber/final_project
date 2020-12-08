@@ -32,14 +32,12 @@ public class ConnectionPool {
         try {
             this.poolSize = Integer.parseInt(dbResourceManager.getValue(
                     DBParameter.DB_POOL_SIZE));
-        } catch (NumberFormatException e) {
-            log.error("Wrong number format of connection pool size");
-            poolSize = 5;
-        }
-        try {
             initPoolData();
+        } catch (NumberFormatException e) {
+            log.error("Wrong number format of connection pool size", e);
+            poolSize = 5;
         } catch (ConnectionException e) {
-            e.printStackTrace();
+            log.error("Connection exception init pool data", e);
         }
     }
 
@@ -59,7 +57,6 @@ public class ConnectionPool {
         }catch (SQLException e) {
             log.error("SQLException in ConnectionPool init pool data");
             throw new ConnectionException("SQLException in ConnectionPool", e);
-
         }
     }
 

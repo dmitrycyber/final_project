@@ -24,8 +24,6 @@ public class UserServiceImpl implements UserService {
 	private final Logger log = Logger.getLogger(UserServiceImpl.class);
 	private final DaoFactory dao = DaoFactory.getInstance();
 	private final UserDao userDao = dao.getUserDAO();
-//	private static final String EMPLOYEE_ROLE = "employee";
-//	private static final String EMPLOYEE_ROLE = "employee";
 
 	@Override
 	public User login(AuthData authData) throws ServiceException, ServiceUserNotFoundException {

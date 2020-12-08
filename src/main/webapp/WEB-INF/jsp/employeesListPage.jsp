@@ -34,14 +34,14 @@
         <section class="welcome-section">
             <div class="wrapper-welcome-section">
                 <div class="card-title">${title}</div>
-                <form action="MainController" class="auth-form">
+                <%--<form action="MainController" class="auth-form">
                     <input type="hidden" name="command" value="go_to_create_employee">
                     <c:if test="${user.role eq roleConsts.ADMIN}">
                         <div class="parent-submit-btn">
                             <button type="submit" class="submit-btn">Создать сотрудника</button>
                         </div>
                     </c:if>
-                </form>
+                </form>--%>
                 <div class="info-block-adv">
                     <table border="1">
                         <tr>
